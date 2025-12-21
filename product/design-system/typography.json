@@ -1,0 +1,49 @@
+{
+  "heading": {
+    "fontFamily": "Raleway, sans-serif",
+    "weights": [400, 500, 600, 700, 800],
+    "source": "Google Fonts"
+  },
+  "body": {
+    "fontFamily": "Raleway, sans-serif",
+    "weights": [400, 500, 600],
+    "source": "Google Fonts"
+  },
+  "mono": {
+    "fontFamily": "ui-monospace, monospace",
+    "weights": [400, 500],
+    "source": "System"
+  },
+  "scale": {
+    "xxs": {
+      "size": "0.625rem",
+      "lineHeight": "0.875rem",
+      "letterSpacing": "0.02em"
+    },
+    "xs": {
+      "size": "0.75rem",
+      "lineHeight": "1rem",
+      "letterSpacing": "0.01em"
+    },
+    "sm": {
+      "size": "0.875rem",
+      "lineHeight": "1.25rem"
+    },
+    "base": {
+      "size": "1rem",
+      "lineHeight": "1.5rem"
+    },
+    "lg": {
+      "size": "1.125rem",
+      "lineHeight": "1.5rem"
+    },
+    "xl": {
+      "size": "1.25rem",
+      "lineHeight": "1.5rem"
+    },
+    "2xl": {
+      "size": "1.5rem",
+      "lineHeight": "2rem"
+    }
+  }
+}

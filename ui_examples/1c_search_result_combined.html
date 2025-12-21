@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>easyGDS Holidays - Search Results</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#203C94",
+                        secondary: "#1A3994",
+                        "primary-hover": "#1A3994",
+                        "text-main": "#1A1A1A",
+                        "text-muted": "#666666",
+                        "text-light": "#999999",
+                        "bg-surface": "#F5F8FF",
+                        "gray-border": "#E5E7EB",
+                        "gray-divider": "#D1D5DB",
+                        success: "#4CAF50",
+                        gold: "#FFB800",
+                    },
+                    fontFamily: {
+                        sans: ["Raleway", "sans-serif"],
+                    },
+                    fontSize: {
+                        'xxs': ['0.625rem', { lineHeight: '0.875rem', letterSpacing: '0.02em' }],
+                        'xs': ['0.75rem', { lineHeight: '1rem', letterSpacing: '0.01em' }],
+                        'sm': ['0.875rem', { lineHeight: '1.25rem' }],
+                        'base': ['1rem', { lineHeight: '1.5rem' }],
+                        'lg': ['1.125rem', { lineHeight: '1.5rem' }],
+                        'xl': ['1.25rem', { lineHeight: '1.5rem' }],
+                        '2xl': ['1.5rem', { lineHeight: '2rem' }],
+                    },
+                    spacing: {
+                        '4.5': '1.125rem',
+                        '18': '4.5rem',
+                    },
+                    boxShadow: {
+                        'sm': '0 1px 3px 0 rgba(0, 0, 0, 0.08)',
+                        'md': '0 4px 12px -2px rgba(0, 0, 0, 0.1)',
+                        'lg': '0 8px 24px -4px rgba(32, 60, 148, 0.15)',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.2s ease-out',
+                        'slide-up': 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'fade-in-down': 'fadeInDown 0.2s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(16px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        fadeInDown: {
+                            '0%': { opacity: '0', transform: 'translateY(-8px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        * {
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        button {
+            transition-duration: 150ms;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+        }
+
+        .leaflet-control-zoom {
+            border: none !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        .leaflet-control-zoom a {
+            width: 32px !important;
+            height: 32px !important;
+            line-height: 32px !important;
+            font-size: 18px !important;
+            border: none !important;
+            background: white !important;
+            color: #203C94 !important;
+            font-weight: 700 !important;
+        }
+
+        .leaflet-control-zoom a:first-child {
+            border-radius: 8px 8px 0 0 !important;
+        }
+
+        .leaflet-control-zoom a:last-child {
+            border-radius: 0 0 8px 8px !important;
+        }
+
+        .custom-marker {
+            background: white;
+            border: 2.5px solid #203C94;
+            border-radius: 50% 50% 50% 0;
+            width: 40px;
+            height: 40px;
+            transform: rotate(-45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(32, 60, 148, 0.25);
+            position: relative;
+        }
+
+        .custom-marker:hover,
+        .custom-marker.active {
+            transform: rotate(-45deg) scale(1.15);
+            border-width: 3px;
+            box-shadow: 0 4px 16px rgba(32, 60, 148, 0.4);
+            z-index: 50 !important;
+            background: #203C94;
+            border-color: #FFB800;
+        }
+
+        .custom-marker-price {
+            transform: rotate(45deg);
+            font-size: 10px;
+            font-weight: 800;
+            color: #203C94;
+            white-space: nowrap;
+            letter-spacing: -0.02em;
+        }
+
+        .custom-marker:hover .custom-marker-price,
+        .custom-marker.active .custom-marker-price {
+            color: white;
+        }
+
+        .view-section {
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .view-section.hidden-view {
+            display: none;
+            opacity: 0;
+        }
+
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body class="bg-white font-sans text-text-main antialiased min-h-screen flex flex-col overflow-x-hidden">
+
+    <!-- Header -->
+    <nav class="shrink-0 z-50 bg-white border-b border-gray-border shadow-sm relative" id="main-nav">
+
+        <!-- Desktop Header -->
+        <div class="hidden md:block">
+            <div class="container mx-auto px-6 h-16 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <img src="easygds_logo.png" alt="easygds" class="h-7 object-contain">
+                    <div class="h-6 w-px bg-gray-divider"></div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleSection('regional-settings')"
+                        class="flex items-center gap-2 px-3 h-10 rounded-lg hover:bg-gray-50 text-text-muted hover:text-primary transition-colors group"
+                        aria-label="Regional settings" aria-expanded="false">
+                        <img src="https://flagcdn.com/w20/gb.png"
+                            class="w-5 h-auto rounded shadow-sm transition-opacity" alt="UK">
+                        <span class="text-xs font-semibold text-secondary">GBP</span>
+                        <span
+                            class="material-icons-round text-lg text-text-muted group-hover:text-primary transition-colors">expand_more</span>
+                    </button>
+                    <div class="h-6 w-px bg-gray-divider"></div>
+                    <button
+                        class="w-10 h-10 rounded-full hover:bg-gray-50 text-text-muted hover:text-primary transition-colors flex items-center justify-center"
+                        aria-label="User account">
+                        <span class="material-icons-round text-2xl" aria-hidden="true">person_outline</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Header -->
+        <div class="md:hidden bg-white relative z-40">
+            <div class="h-14 flex items-center justify-between px-4 w-full">
+                <img src="easygds_logo.png" alt="easygds" class="h-6 object-contain">
+
+                <button onclick="toggleMobileHeader()"
+                    class="flex flex-col items-center justify-center px-3 h-11 rounded-lg hover:bg-gray-50 transition-colors group">
+                    <div class="flex items-center gap-1 text-sm font-semibold text-secondary">
+                        <span>Almaty</span>
+                        <span class="text-gray-divider material-icons-round text-sm">arrow_forward</span>
+                        <span>Dubai</span>
+                        <span id="mobile-chevron"
+                            class="material-icons-round text-primary text-lg transform transition-transform duration-200 group-hover:translate-y-px">expand_more</span>
+                    </div>
+                    <div class="text-xxs text-text-muted font-medium mt-0.5">13-17 Nov • Flight Incl.</div>
+                </button>
+
+                <div class="flex items-center gap-1">
+                    <button onclick="toggleSection('regional-settings')"
+                        class="w-11 h-11 rounded-full hover:bg-gray-50 text-text-muted hover:text-primary transition-colors flex items-center justify-center"
+                        aria-label="Regional settings" aria-expanded="false">
+                        <img src="https://flagcdn.com/w20/gb.png" class="w-5 h-auto rounded shadow-sm" alt="UK">
+                    </button>
+                    <button
+                        class="w-11 h-11 rounded-full hover:bg-gray-50 text-text-muted hover:text-primary transition-colors flex items-center justify-center"
+                        aria-label="User account">
+                        <span class="material-icons-round text-2xl" aria-hidden="true">person_outline</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Dropdown Panel -->
+            <div id="mobile-header-panel"
+                class="hidden absolute top-full left-0 w-full bg-white shadow-lg border-b border-gray-border overflow-hidden origin-top animate-fade-in">
+                <div class="p-4 space-y-3 bg-gray-50/50">
+                    <div class="bg-white p-3 rounded-lg border border-gray-border shadow-sm">
+                        <div class="flex items-center justify-between mb-2 pb-2 border-b border-gray-border">
+                            <span class="text-xs font-bold text-primary uppercase flex items-center gap-2">
+                                <span class="material-icons-round text-lg">flight</span> Itinerary
+                            </span>
+                            <span
+                                class="text-xxs text-text-muted bg-gray-100 px-2 py-0.5 rounded-full font-semibold">Included</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="font-semibold text-secondary">07:05 (ALA)</span>
+                                <span class="text-gray-divider">-------</span>
+                                <span class="font-semibold text-secondary">10:45 (DXB)</span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="font-semibold text-secondary">12:00 (DXB)</span>
+                                <span class="text-gray-divider">-------</span>
+                                <span class="font-semibold text-secondary">18:10 (ALA)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="bg-white p-2.5 rounded-lg border border-gray-border">
+                            <div class="text-xxs text-text-muted uppercase font-bold mb-1">Dates</div>
+                            <div class="text-xs font-semibold text-secondary">13-17 Nov</div>
+                        </div>
+                        <div class="bg-white p-2.5 rounded-lg border border-gray-border">
+                            <div class="text-xxs text-text-muted uppercase font-bold mb-1">Guests</div>
+                            <div class="text-xs font-semibold text-secondary">2 Adults</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-2 p-4 pt-0">
+                    <button onclick="toggleMobileHeader()"
+                        class="flex-1 h-11 bg-white border border-gray-border text-text-muted rounded-lg text-xs font-bold uppercase shadow-sm hover:border-gray-divider transition-colors">Close</button>
+                    <button onclick="openSearchFromMobile()"
+                        class="flex-1 h-11 bg-primary text-white border border-primary rounded-lg text-xs font-bold uppercase shadow-sm hover:bg-primary-hover flex items-center justify-center gap-2 transition-all hover:shadow-md active:scale-95">
+                        <span class="material-icons-round text-lg">edit</span> Modify
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function openSearchFromMobile() {
+                toggleMobileHeader();
+                toggleSection('search-widget');
+            }
+        </script>
+
+        <!-- Search Widget -->
+        <div id="search-widget"
+            class="hidden bg-white border-b border-gray-border shadow-lg absolute left-0 right-0 z-20 top-full animate-fade-in-down">
+            <div class="container mx-auto px-4 md:px-6 py-4 bg-white relative">
+                <button onclick="toggleSection('search-widget')"
+                    class="absolute top-4 right-4 text-text-muted hover:text-primary transition-colors z-10 w-8 h-8 rounded-full hover:bg-gray-50 flex items-center justify-center"
+                    aria-label="Close search widget">
+                    <span class="material-icons-round text-xl" aria-hidden="true">close</span>
+                </button>
+
+                <form class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 pr-12 md:pr-0 items-end">
+                    <div class="relative group">
+                        <span
+                            class="absolute left-3 top-1/2 -translate-y-1/2 material-icons-round text-text-muted text-lg group-focus-within:text-primary transition-colors">flight_takeoff</span>
+                        <label
+                            class="absolute -top-2 left-2 px-1 bg-white text-xxs font-bold uppercase text-primary">From</label>
+                        <input type="text" value="Almaty (ALA)"
+                            class="w-full pl-10 pr-3 h-11 bg-white border border-gray-border rounded-lg text-sm font-semibold text-secondary focus:ring-2 focus:ring-primary/20 focus:border-primary shadow-sm transition-all">
+                    </div>
+                    <div class="relative group">
+                        <span
+                            class="absolute left-3 top-1/2 -translate-y-1/2 material-icons-round text-text-muted text-lg group-focus-within:text-primary transition-colors">flight_land</span>
+                        <label
+                            class="absolute -top-2 left-2 px-1 bg-white text-xxs font-bold uppercase text-primary">To</label>
+                        <input type="text" value="Dubai (DXB)"
+                            class="w-full pl-10 pr-3 h-11 bg-white border border-gray-border rounded-lg text-sm font-semibold text-secondary focus:ring-2 focus:ring-primary/20 focus:border-primary shadow-sm transition-all">
+                    </div>
+                    <div class="relative group">
+                        <span
+                            class="absolute left-3 top-1/2 -translate-y-1/2 material-icons-round text-text-muted text-lg group-focus-within:text-primary transition-colors">calendar_today</span>
+                        <label
+                            class="absolute -top-2 left-2 px-1 bg-white text-xxs font-bold uppercase text-primary">Dates</label>
+                        <input type="text" value="13 Nov - 17 Nov"
+                            class="w-full pl-10 pr-3 h-11 bg-white border border-gray-border rounded-lg text-sm font-semibold text-secondary focus:ring-2 focus:ring-primary/20 focus:border-primary shadow-sm transition-all">
+                    </div>
+                    <div class="relative group">
+                        <span
+                            class="absolute left-3 top-1/2 -translate-y-1/2 material-icons-round text-text-muted text-lg group-focus-within:text-primary transition-colors">person</span>
+                        <label
+                            class="absolute -top-2 left-2 px-1 bg-white text-xxs font-bold uppercase text-primary">Guests</label>
+                        <select
+                            class="w-full pl-10 pr-3 h-11 bg-white border border-gray-border rounded-lg text-sm font-semibold text-secondary focus:ring-2 focus:ring-primary/20 focus:border-primary shadow-sm transition-all appearance-none">
+                            <option>2 Adults, 1 Room</option>
+                        </select>
+                        <span
+                            class="absolute right-3 top-1/2 -translate-y-1/2 material-icons-round text-text-muted text-lg pointer-events-none">expand_more</span>
+                    </div>
+                    <button type="button" onclick="toggleSection('search-widget')"
+                        class="h-11 bg-primary text-white font-bold uppercase text-xs rounded-lg shadow-md hover:bg-primary-hover hover:shadow-lg transition-all active:scale-95">
+                        Update Search
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Flight Details Widget -->
+        <div id="flight-details"
+            class="hidden bg-white border-b border-gray-border shadow-lg absolute left-0 right-0 z-20 top-full animate-fade-in-down">
+            <div class="container mx-auto px-4 md:px-6 py-4 bg-white relative">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-xs font-bold uppercase text-text-muted">Detailed Itinerary</h3>
+                    <button onclick="toggleSection('flight-details')"
+                        class="text-text-muted hover:text-primary transition-colors w-8 h-8 rounded-full hover:bg-gray-50 flex items-center justify-center"
+                        aria-label="Close flight details">
+                        <span class="material-icons-round text-xl" aria-hidden="true">close</span>
+                    </button>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3">
+                    <div class="border border-gray-border rounded-lg p-4 bg-gray-50/50">
+                        <div class="text-xs font-bold text-primary uppercase mb-2">Outbound • 4h 40m</div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="text-xl font-bold text-secondary">07:05 <span
+                                    class="text-sm font-normal text-text-muted">ALA</span></div>
+                            <div class="h-px flex-grow bg-gray-divider mx-4 relative">
+                                <span class="absolute right-0 -top-1.5 w-3 h-3 rounded-full bg-gray-divider"></span>
+                            </div>
+                            <div class="text-xl font-bold text-secondary">10:45 <span
+                                    class="text-sm font-normal text-text-muted">DXB</span></div>
+                        </div>
+                        <div class="text-xs text-text-muted flex items-center gap-2">
+                            <span class="material-icons-round text-lg">flight_takeoff</span> easygds KC 895 • Economy
+                        </div>
+                    </div>
+                    <div class="border border-gray-border rounded-lg p-4 bg-gray-50/50">
+                        <div class="text-xs font-bold text-primary uppercase mb-2">Return • 4h 10m</div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="text-xl font-bold text-secondary">12:00 <span
+                                    class="text-sm font-normal text-text-muted">DXB</span></div>
+                            <div class="h-px flex-grow bg-gray-divider mx-4 relative">
+                                <span class="absolute right-0 -top-1.5 w-3 h-3 rounded-full bg-gray-divider"></span>
+                            </div>
+                            <div class="text-xl font-bold text-secondary">18:10 <span
+                                    class="text-sm font-normal text-text-muted">ALA</span></div>
+                        </div>
+                        <div class="text-xs text-text-muted flex items-center gap-2">
+                            <span class="material-icons-round text-lg">flight_takeoff</span> easygds KC 896 • Economy
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Regional Settings Modal -->
+        <div id="regional-settings"
+            class="hidden fixed inset-0 z-50 flex items-end md:items-center justify-center p-0 md:p-4 bg-black/50 backdrop-blur-sm animate-fade-in"
+            role="dialog" aria-modal="true" aria-labelledby="regional-settings-title">
+            <div
+                class="bg-white rounded-t-2xl md:rounded-2xl shadow-lg w-full max-w-2xl overflow-hidden flex flex-col max-h-[85vh] animate-slide-up">
+                <div class="px-6 py-4 border-b border-gray-border flex items-center justify-between bg-gray-50">
+                    <h3 id="regional-settings-title" class="text-lg font-bold text-secondary">Regional Settings</h3>
+                    <button onclick="toggleSection('regional-settings')"
+                        class="w-9 h-9 hover:bg-gray-100 rounded-full text-text-muted hover:text-secondary transition-colors flex items-center justify-center"
+                        aria-label="Close regional settings">
+                        <span class="material-icons-round text-xl" aria-hidden="true">close</span>
+                    </button>
+                </div>
+
+                <div class="p-6 overflow-y-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-text-muted uppercase block mb-2">Country</label>
+                            <div class="space-y-2">
+                                <button
+                                    class="w-full flex items-center gap-3 px-4 h-11 rounded-lg bg-primary/10 border border-primary/20 text-primary font-semibold text-sm transition-all">
+                                    <img src="https://flagcdn.com/w20/gb.png" class="w-6 rounded shadow-sm" alt="UK">
+                                    United Kingdom
+                                </button>
+                                <button
+                                    class="w-full flex items-center gap-3 px-4 h-11 rounded-lg hover:bg-gray-50 text-text-main font-medium text-sm border border-transparent transition-all">
+                                    <img src="https://flagcdn.com/w20/us.png" class="w-6 rounded shadow-sm" alt="US">
+                                    United States
+                                </button>
+                                <button
+                                    class="w-full flex items-center gap-3 px-4 h-11 rounded-lg hover:bg-gray-50 text-text-main font-medium text-sm border border-transparent transition-all">
+                                    <img src="https://flagcdn.com/w20/ae.png" class="w-6 rounded shadow-sm" alt="UAE">
+                                    UAE
+                                </button>
+                                <button
+                                    class="w-full flex items-center gap-3 px-4 h-11 rounded-lg hover:bg-gray-50 text-text-main font-medium text-sm border border-transparent transition-all">
+                                    <img src="https://flagcdn.com/w20/kz.png" class="w-6 rounded shadow-sm" alt="KZ">
+                                    Kazakhstan
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-text-muted uppercase block mb-2">Language</label>
+                            <div class="space-y-2">
+                                <button
+                                    class="w-full text-left px-4 h-11 rounded-lg bg-primary/10 border border-primary/20 text-primary font-semibold text-sm transition-all">
+                                    English (UK)
+                                </button>
+                                <button
+                                    class="w-full text-left px-4 h-11 rounded-lg hover:bg-gray-50 text-text-main font-medium text-sm border border-transparent transition-all">
+                                    Français
+                                </button>
+                                <button
+                                    class="w-full text-left px-4 h-11 rounded-lg hover:bg-gray-50 text-text-main font-medium text-sm border border-transparent transition-all">
+                                    Deutsch
+                                </button>
+                                <button
+                                    class="w-full text-left px-4 h-11 rounded-lg hover:bg-gray-50 text-text-main font-medium text-sm border border-transparent transition-all">
+                                    Русский
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-text-muted uppercase block mb-2">Currency</label>
+                            <div class="space-y-2">
+                                <button
+                                    class="w-full text-left px-4 h-11 rounded-lg bg-primary/10 border border-primary/20 text-primary font-semibold text-sm flex items-center justify-between transition-all">
+                                    <span>British Pound</span> <span class="font-bold">£</span>
+                                </button>
+                                <button
+                                    class="w-full text-left px-4 h-11 rounded-lg hover:bg-gray-50 text-text-main font-medium text-sm border border-transparent flex items-center justify-between transition-all">
+                                    <span>US Dollar</span> <span class="text-text-muted">$</span>
+                                </button>
+                                <button
+                                    class="w-full text-left px-4 h-11 rounded-lg hover:bg-gray-50 text-text-main font-medium text-sm border border-transparent flex items-center justify-between transition-all">
+                                    <span>Euro</span> <span class="text-text-muted">€</span>
+                                </button>
+                                <button
+                                    class="w-full text-left px-4 h-11 rounded-lg hover:bg-gray-50 text-text-main font-medium text-sm border border-transparent flex items-center justify-between transition-all">
+                                    <span>Kazakh Tenge</span> <span class="text-text-muted">₸</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="px-6 py-4 border-t border-gray-border bg-gray-50 flex items-center justify-end gap-3 shrink-0">
+                    <button onclick="toggleSection('regional-settings')"
+                        class="px-6 h-11 rounded-lg font-bold text-sm text-text-muted hover:text-secondary hover:bg-gray-100 transition-colors">Cancel</button>
+                    <button onclick="toggleSection('regional-settings')"
+                        class="px-8 h-11 rounded-lg font-bold text-sm text-white bg-primary shadow-md hover:shadow-lg hover:bg-primary-hover transition-all active:scale-95">Apply
+                        Settings</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        function toggleMobileHeader() {
+            const panel = document.getElementById('mobile-header-panel');
+            const chevron = document.getElementById('mobile-chevron');
+            panel.classList.toggle('hidden');
+            chevron.style.transform = panel.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            const otherId = id === 'search-widget' ? 'flight-details' : 'search-widget';
+            const otherSection = document.getElementById(otherId);
+            const flightChevron = document.getElementById('chevron-flight-details');
+
+            if (otherSection && !otherSection.classList.contains('hidden')) {
+                otherSection.classList.add('hidden');
+                if (otherId === 'flight-details' && flightChevron) flightChevron.style.transform = 'rotate(0deg)';
+            }
+
+            if (section) section.classList.toggle('hidden');
+
+            if (id === 'flight-details' && flightChevron) {
+                flightChevron.style.transform = section.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+            }
+        }
+    </script>
+
+    <!-- Content Area -->
+    <div id="content-area" class="flex-grow relative flex flex-col overflow-visible">
+
+        <!-- Desktop Context Bar -->
+        <div class="bg-gray-50 border-t border-gray-border z-40 sticky top-0 hidden md:block shadow-sm h-16">
+            <div class="container mx-auto px-6 h-full">
+                <div class="flex items-center gap-6 h-full">
+                    <div class="flex items-center gap-4 border-r border-gray-divider pr-6">
+                        <div class="flex items-center gap-3 text-base text-text-main overflow-hidden">
+                            <span class="material-icons-round text-xl text-primary">search</span>
+                            <div class="flex flex-col">
+                                <span class="font-semibold text-secondary truncate text-sm">Almaty - Dubai</span>
+                                <span class="text-text-muted text-xs">13-17 Nov • 2 Pax</span>
+                            </div>
+                        </div>
+                        <button onclick="toggleSection('search-widget')"
+                            class="flex items-center gap-2 px-4 h-10 bg-white border border-primary text-primary rounded-lg text-xs font-bold uppercase hover:bg-primary hover:text-white hover:shadow-md transition-all whitespace-nowrap shadow-sm active:scale-95">
+                            <span class="material-icons-round text-lg">edit</span> Modify
+                        </button>
+                    </div>
+
+                    <div onclick="toggleSection('flight-details')"
+                        class="flex items-center justify-between gap-4 cursor-pointer group flex-grow hover:bg-white transition-all rounded-lg px-3 -mx-3 h-full">
+                        <div class="flex items-center gap-8 text-sm w-full">
+                            <div class="flex items-center gap-3 text-text-main">
+                                <span class="material-icons-round text-text-muted text-lg rotate-90">flight</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-semibold text-secondary text-sm">07:05</span>
+                                    <span class="text-text-muted">→</span>
+                                    <span class="font-semibold text-secondary text-sm">10:45</span>
+                                    <span class="text-xs text-text-muted bg-gray-100 px-2 py-1 rounded">KC 895</span>
+                                </div>
+                            </div>
+                            <div class="w-px h-6 bg-gray-divider"></div>
+                            <div class="flex items-center gap-3 text-text-main">
+                                <span class="material-icons-round text-text-muted text-lg -rotate-90">flight</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-semibold text-secondary text-sm">12:00</span>
+                                    <span class="text-text-muted">→</span>
+                                    <span class="font-semibold text-secondary text-sm">18:10</span>
+                                    <span class="text-xs text-text-muted bg-gray-100 px-2 py-1 rounded">KC 896</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span id="chevron-flight-details"
+                            class="material-icons-round text-text-muted text-xl group-hover:text-primary transition-transform duration-200">expand_more</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tools Bar -->
+        <div
+            class="container mx-auto px-4 md:px-6 py-3 shrink-0 sticky top-0 md:top-16 z-30 bg-white border-b border-gray-border">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 h-auto">
+                <div class="flex items-center gap-2">
+                    <h1 class="text-lg md:text-xl font-semibold text-secondary">
+                        Stays in <span class="text-primary">Dubai</span>
+                    </h1>
+                    <div class="h-4 w-px bg-gray-divider hidden md:block"></div>
+                    <p class="text-xs text-text-muted font-medium">
+                        <span id="total-count-display">84</span> results
+                    </p>
+                </div>
+
+                <div class="flex gap-2 w-full md:w-auto items-center">
+                    <div class="relative flex-1 md:flex-initial md:w-56 group">
+                        <span
+                            class="absolute left-3 top-1/2 -translate-y-1/2 material-icons-round text-text-muted text-lg"
+                            aria-hidden="true">search</span>
+                        <input type="text" placeholder="Search hotel..."
+                            class="w-full pl-10 pr-3 h-10 bg-gray-50 border border-gray-border rounded-lg text-sm font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary shadow-sm transition-all"
+                            aria-label="Search hotels">
+                    </div>
+
+                    <button
+                        class="flex items-center justify-center gap-2 px-3 md:px-4 h-10 bg-white border border-gray-border text-secondary rounded-lg text-xs font-bold uppercase hover:bg-gray-50 transition-colors shadow-sm shrink-0">
+                        <span class="material-icons-round text-lg">tune</span>
+                        <span class="hidden sm:inline">Filters</span>
+                    </button>
+
+                    <button id="view-toggle-btn" onclick="toggleViewMode()"
+                        class="flex items-center justify-center gap-2 px-3 md:px-4 h-10 bg-white border border-primary text-primary rounded-lg text-xs font-bold uppercase hover:bg-primary hover:text-white transition-all whitespace-nowrap shadow-sm hover:shadow-md shrink-0 active:scale-95">
+                        <span class="material-icons-round text-lg">map</span>
+                        <span class="hidden sm:inline" id="view-toggle-text">Map View</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- List View -->
+        <div id="view-list" class="view-section container mx-auto px-4 md:px-6 py-4">
+            <section class="mb-6 relative border-b border-gray-border pb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xs font-bold uppercase text-secondary flex items-center gap-3">
+                        <span class="w-8 h-1 bg-primary rounded-full"></span> easygds Picks
+                    </h2>
+                    <div class="flex gap-2 hidden md:flex">
+                        <button onclick="scrollRecs('left')"
+                            class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-border bg-white hover:border-primary hover:bg-gray-50 text-secondary transition-all"
+                            aria-label="Scroll recommendations left">
+                            <span class="material-icons-round text-lg" aria-hidden="true">arrow_back</span>
+                        </button>
+                        <button onclick="scrollRecs('right')"
+                            class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-border bg-white hover:border-primary hover:bg-gray-50 text-secondary transition-all"
+                            aria-label="Scroll recommendations right">
+                            <span class="material-icons-round text-lg" aria-hidden="true">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="rec-container"
+                    class="flex overflow-x-auto snap-x snap-mandatory gap-4 hide-scrollbar -mx-4 px-4 md:mx-0 md:px-0 py-2">
+                </div>
+            </section>
+
+            <div>
+                <div class="flex items-end justify-between mb-4">
+                    <h2 class="text-xs font-bold uppercase text-secondary">All Properties</h2>
+                    <span class="text-xs text-text-muted font-medium">Sorted by Recommended</span>
+                </div>
+                <div id="main-results-list" class="flex flex-col gap-4 pb-6">
+                </div>
+            </div>
+
+            <div class="mt-6 mb-8 text-center">
+                <button
+                    class="px-12 h-11 border-2 border-gray-divider rounded-full text-xs font-bold uppercase hover:border-primary hover:text-primary transition-all text-secondary bg-white hover:shadow-md active:scale-95">
+                    Load More Results
+                </button>
+            </div>
+        </div>
+
+        <!-- Map View -->
+        <div id="view-map"
+            class="view-section hidden-view w-full h-[650px] flex flex-col md:flex-row overflow-hidden border-t border-gray-border mt-2 mb-8 shadow-sm relative">
+
+            <div
+                class="w-full h-[40vh] md:h-full md:w-[65%] lg:w-[68%] relative bg-gray-100 order-1 md:order-2 shrink-0 border-b md:border-b-0 border-gray-border shadow-sm md:shadow-none z-10">
+                <div id="map" class="h-full w-full outline-none"></div>
+                <div class="absolute top-4 left-1/2 -translate-x-1/2 z-50 w-max max-w-[90%]">
+                    <button id="search-area-btn" onclick="updateMapSearch()"
+                        class="bg-white/95 backdrop-blur text-secondary hover:text-primary px-4 h-10 rounded-full shadow-md text-xs font-bold uppercase hover:shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95 border border-gray-border/50">
+                        <span class="material-icons-round text-lg">refresh</span>
+                        <span>Search this area</span>
+                    </button>
+                </div>
+            </div>
+
+            <div
+                class="w-full md:w-[35%] lg:w-[32%] bg-white md:border-r border-gray-border flex flex-col z-20 shadow-md md:shadow-lg relative order-2 md:order-1 flex-1 md:h-full overflow-hidden">
+                <div id="map-results-list" class="flex-1 overflow-y-auto w-full bg-gray-50/50 p-3 space-y-3 pb-16">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-border py-6 mt-auto">
+        <div
+            class="container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-text-muted">
+            <p>&copy; 2025 easyGDS. All rights reserved.</p>
+            <div class="flex gap-6">
+                <a href="#" class="hover:text-primary transition-colors">Terms & Conditions</a>
+                <a href="#" class="hover:text-primary transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-primary transition-colors">Cookie Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const hotels = [
+            {
+                id: 1, name: "Atlantis, The Palm", location: "Palm Jumeirah, Dubai",
+                coordinates: [25.1304, 55.1179], stars: 5, rating: 9.0, ratingText: "Exceptional",
+                price: 4200, oldPrice: 4800,
+                images: ["https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80"],
+                roomType: "Ocean King", boardType: "Half Board", recBadge: "Iconic"
+            },
+            {
+                id: 2, name: "Rixos Premium Dubai JBR", location: "Jumeirah Beach Residence",
+                coordinates: [25.0777, 55.1357], stars: 5, rating: 9.2, ratingText: "Excellent",
+                price: 2800, oldPrice: 3100,
+                images: ["https://images.unsplash.com/photo-1561501900-3701fa6a0864?auto=format&fit=crop&w=800&q=80"],
+                roomType: "Premium Room", boardType: "Breakfast", recBadge: "Bestseller"
+            },
+            {
+                id: 3, name: "Jumeirah Al Naseem", location: "Madinat Jumeirah",
+                coordinates: [25.1354, 55.1848], stars: 5, rating: 9.5, ratingText: "Exceptional",
+                price: 5100, oldPrice: 5500,
+                images: ["https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80"],
+                roomType: "Resort Deluxe", boardType: "Breakfast", recBadge: "Luxury"
+            },
+            {
+                id: 4, name: "Sofitel Dubai The Palm", location: "Palm Jumeirah",
+                coordinates: [25.1280, 55.1398], stars: 5, rating: 8.8, ratingText: "Very Good",
+                price: 2500, oldPrice: 2900,
+                images: ["https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80"],
+                roomType: "Luxury Room", boardType: "All Inclusive", recBadge: "Family Choice"
+            },
+            {
+                id: 5, name: "Five Palm Jumeirah", location: "Palm Jumeirah",
+                coordinates: [25.1152, 55.1387], stars: 5, rating: 8.9, ratingText: "Excellent",
+                price: 3200, oldPrice: 3500,
+                images: ["https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=800&q=80"],
+                roomType: "Superior Room", boardType: "Half Board", recBadge: "Trending"
+            },
+            {
+                id: 6, name: "Burj Al Arab Jumeirah", location: "Jumeirah Street",
+                coordinates: [25.1412, 55.1853], stars: 5, rating: 9.8, ratingText: "Outstanding",
+                price: 8500, oldPrice: 9200,
+                images: ["https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80"],
+                roomType: "Deluxe Suite", boardType: "All Inclusive", recBadge: "Iconic"
+            },
+            {
+                id: 7, name: "Address Downtown", location: "Downtown Dubai",
+                coordinates: [25.1952, 55.2761], stars: 5, rating: 9.1, ratingText: "Excellent",
+                price: 3800, oldPrice: 4200,
+                images: ["https://images.unsplash.com/photo-1571896349842-6e5c48dc52e3?auto=format&fit=crop&w=800&q=80"],
+                roomType: "Premier Room", boardType: "Breakfast", recBadge: "City"
+            },
+            {
+                id: 8, name: "Armani Hotel Dubai", location: "Burj Khalifa",
+                coordinates: [25.1972, 55.2744], stars: 5, rating: 9.3, ratingText: "Exceptional",
+                price: 4500, oldPrice: 5000,
+                images: ["https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80"],
+                roomType: "Classic", boardType: "Half Board", recBadge: "Designer"
+            }
+        ];
+
+        let currentMode = 'list';
+        let map;
+        let markers = {};
+        let selectedHotelId = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderRecs();
+            renderMainList();
+            renderMapList();
+        });
+
+        function toggleViewMode() {
+            const listContainer = document.getElementById('view-list');
+            const mapContainer = document.getElementById('view-map');
+            const toggleBtn = document.getElementById('view-toggle-btn');
+            const toggleText = document.getElementById('view-toggle-text');
+            const toggleIcon = toggleBtn.querySelector('.material-icons-round');
+
+            if (currentMode === 'list') {
+                currentMode = 'map';
+                listContainer.classList.add('hidden-view');
+                mapContainer.classList.remove('hidden-view');
+                toggleBtn.classList.remove('bg-white', 'border-primary', 'text-primary');
+                toggleBtn.classList.add('bg-primary', 'text-white', 'shadow-md');
+                toggleText.innerText = "List View";
+                toggleIcon.innerText = "view_list";
+
+                if (!map) {
+                    initMap();
+                } else {
+                    map.invalidateSize();
+                }
+                mapContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                currentMode = 'list';
+                mapContainer.classList.add('hidden-view');
+                listContainer.classList.remove('hidden-view');
+                toggleBtn.classList.add('bg-white', 'border-primary', 'text-primary');
+                toggleBtn.classList.remove('bg-primary', 'text-white', 'shadow-md');
+                toggleText.innerText = "Map View";
+                toggleIcon.innerText = "map";
+            }
+        }
+
+        function renderRecs() {
+            const container = document.getElementById('rec-container');
+            const recHotels = hotels.slice(0, 5);
+
+            container.innerHTML = recHotels.map(hotel => {
+                const starsHtml = Array(hotel.stars).fill('<span class="material-icons-round text-gold text-xs">star</span>').join('');
+                return `
+                 <div class="snap-center shrink-0 w-[280px] md:w-[300px] group cursor-pointer bg-white rounded-lg border border-gray-border shadow-sm hover:shadow-md transition-all flex flex-col overflow-hidden h-[408px]">
+                    <div class="h-1 w-full bg-primary shrink-0"></div>
+                    <div class="relative bg-gray-100 shrink-0 group/carousel h-[180px]">
+                        <img id="img-rec-${hotel.id}" src="${hotel.images[0]}" data-idx="0" class="w-full h-full object-cover transition-opacity duration-200">
+
+                        <button onclick="changeSlide('rec', ${hotel.id}, -1, event)" class="absolute top-1/2 left-2 -translate-y-1/2 w-9 h-9 bg-white/90 hover:bg-white text-primary rounded-full shadow-md flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-200 z-10 active:scale-95">
+                            <span class="material-icons-round text-lg">chevron_left</span>
+                        </button>
+                        <button onclick="changeSlide('rec', ${hotel.id}, 1, event)" class="absolute top-1/2 right-2 -translate-y-1/2 w-9 h-9 bg-white/90 hover:bg-white text-primary rounded-full shadow-md flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-200 z-10 active:scale-95">
+                            <span class="material-icons-round text-lg">chevron_right</span>
+                        </button>
+
+                        ${hotel.recBadge ? `<div class="absolute top-2 left-2 bg-primary text-white px-3 py-1 rounded-lg text-xxs font-bold uppercase shadow-md z-0 pointer-events-none">${hotel.recBadge}</div>` : ''}
+                    </div>
+                    <div class="px-4 pt-4 pb-6 flex flex-col flex-1">
+                         <div class="flex items-center gap-2 mb-2">
+                            <div class="flex items-center gap-0.5">${starsHtml}</div>
+                            <div class="text-xs font-semibold text-secondary bg-gray-50 px-2 py-1 rounded border border-gray-border">
+                                ${hotel.rating} <span class="font-normal text-text-muted">${hotel.ratingText}</span>
+                            </div>
+                         </div>
+                         <h3 class="font-bold text-base text-black group-hover:text-primary transition-colors truncate mb-1">${hotel.name}</h3>
+                         <p class="text-xs text-text-muted mb-3 flex items-center gap-1 truncate">
+                            <span class="material-icons-round text-lg text-text-muted">location_on</span> ${hotel.location}
+                         </p>
+                         <div class="flex flex-wrap gap-2 mb-3">
+                             <div class="flex items-center gap-1 text-xs text-text-muted font-medium">
+                                <span class="material-icons-round text-lg text-text-muted">bed</span> ${hotel.roomType}
+                             </div>
+                             <div class="flex items-center gap-1 text-xs text-text-muted font-medium">
+                                <span class="material-icons-round text-lg text-text-muted">restaurant</span> ${hotel.boardType}
+                             </div>
+                         </div>
+                         <div class="pt-3 pb-4 border-t border-gray-border flex items-end justify-between mt-auto">
+                            <div>
+                                ${hotel.oldPrice ? `<div class="text-xs text-text-muted line-through mb-1">£${hotel.oldPrice.toLocaleString()}</div>` : ''}
+                                <div class="text-xl font-bold text-primary leading-none">£${hotel.price.toLocaleString()}</div>
+                            </div>
+                            <button class="bg-primary text-white px-4 h-10 rounded-lg text-xs font-bold uppercase hover:bg-primary-hover hover:shadow-md transition-all active:scale-95">View Deal</button>
+                        </div>
+                    </div>
+                 </div>`;
+            }).join('');
+        }
+
+        function renderMainList() {
+            const container = document.getElementById('main-results-list');
+            container.innerHTML = hotels.map(hotel => {
+                const starsHtml = Array(hotel.stars).fill('<span class="material-icons-round text-gold text-sm">star</span>').join('');
+                return `
+                 <div class="bg-white rounded-lg border border-gray-border overflow-hidden shadow-sm hover:shadow-md transition-all h-auto md:h-[160px] flex flex-col">
+                    <div class="flex flex-col md:flex-row h-full">
+                        <div class="relative w-full md:w-[240px] h-48 md:h-auto shrink-0 bg-gray-100 group/carousel">
+                             <img id="img-main-${hotel.id}" src="${hotel.images[0]}" data-idx="0" class="w-full h-full object-cover transition-opacity duration-200">
+
+                             <button onclick="changeSlide('main', ${hotel.id}, -1, event)" class="absolute top-1/2 left-2 -translate-y-1/2 w-9 h-9 bg-white/90 hover:bg-white text-primary rounded-full shadow-md flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-200 z-10 active:scale-95">
+                                <span class="material-icons-round text-lg">chevron_left</span>
+                             </button>
+                             <button onclick="changeSlide('main', ${hotel.id}, 1, event)" class="absolute top-1/2 right-2 -translate-y-1/2 w-9 h-9 bg-white/90 hover:bg-white text-primary rounded-full shadow-md flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-200 z-10 active:scale-95">
+                                <span class="material-icons-round text-lg">chevron_right</span>
+                             </button>
+
+                             ${hotel.recBadge ? `<div class="absolute top-2 left-2 bg-primary text-white px-3 py-1 rounded-lg text-xxs font-bold uppercase shadow-md z-0 pointer-events-none">${hotel.recBadge}</div>` : ''}
+                        </div>
+                        <div class="flex-grow px-4 pt-4 pb-6 flex flex-col md:flex-row gap-4">
+                             <div class="flex-grow">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <div class="flex items-center gap-0.5">${starsHtml}</div>
+                                    <div class="text-xs font-semibold text-secondary bg-gray-50 px-2 py-1 rounded border border-gray-border">
+                                        ${hotel.rating} <span class="font-normal text-text-muted">${hotel.ratingText}</span>
+                                    </div>
+                                </div>
+                                <h3 class="text-lg font-bold text-black mb-2 hover:text-primary cursor-pointer transition-colors">${hotel.name}</h3>
+                                <p class="text-xs text-text-muted mb-3 flex items-center gap-1">
+                                    <span class="material-icons-round text-lg text-text-muted">location_on</span> ${hotel.location}
+                                </p>
+                                <div class="flex flex-wrap gap-3 mt-auto">
+                                     <div class="flex items-center gap-1 text-xs text-text-muted font-medium">
+                                        <span class="material-icons-round text-lg text-text-muted">bed</span> ${hotel.roomType}
+                                     </div>
+                                     <div class="flex items-center gap-1 text-xs text-text-muted font-medium">
+                                        <span class="material-icons-round text-lg text-text-muted">restaurant</span> ${hotel.boardType}
+                                     </div>
+                                      <div class="flex items-center gap-1 text-xs text-primary font-bold">
+                                        <span class="material-icons-round text-lg">check_circle</span> Flight & Hotel Package
+                                      </div>
+                                </div>
+                             </div>
+                             <div class="flex md:flex-col items-center justify-between md:justify-center md:items-end border-t md:border-t-0 md:border-l border-gray-border pt-4 pb-4 md:pt-0 md:pb-0 md:pl-4 md:w-52 shrink-0 mt-3 md:mt-0">
+                                <div class="text-left md:text-right">
+                                    ${hotel.oldPrice ? `<div class="text-xs text-text-muted line-through mb-1">£${hotel.oldPrice.toLocaleString()}</div>` : ''}
+                                    <div class="text-2xl font-bold text-primary leading-none mb-1">£${hotel.price.toLocaleString()}</div>
+                                    <div class="text-xxs text-green-600 font-semibold">Free Cancellation</div>
+                                </div>
+                                <button class="px-6 h-11 bg-primary text-white rounded-lg text-xs font-bold uppercase hover:bg-primary-hover shadow-md md:w-full mt-0 md:mt-4 transition-all hover:shadow-lg active:scale-95">View Deal</button>
+                             </div>
+                        </div>
+                    </div>
+                 </div>`;
+            }).join('');
+        }
+
+        function renderMapList() {
+            const container = document.getElementById('map-results-list');
+            let htmlContent = hotels.map(hotel => {
+                const starsHtml = Array(hotel.stars).fill('<span class="material-icons-round text-gold text-xs">star</span>').join('');
+                return `
+                 <div id="hotel-card-${hotel.id}" onclick="selectHotel(${hotel.id})" class="hotel-card group relative bg-white rounded-lg border border-gray-border overflow-hidden shadow-sm hover:shadow-md transition-all cursor-pointer flex h-[100px]">
+                    <div class="relative w-[90px] md:w-[85px] lg:w-[100px] shrink-0 bg-gray-100">
+                        <img src="${hotel.images[0]}" class="w-full h-full object-cover">
+                        ${hotel.recBadge ? `<div class="absolute top-1 left-1 bg-primary text-white px-2 py-0.5 rounded-lg text-xxs font-bold uppercase shadow-sm pointer-events-none">${hotel.recBadge}</div>` : ''}
+                    </div>
+                    <div class="flex-grow p-2.5 flex gap-2 min-w-0">
+                        <div class="flex-grow flex flex-col justify-between min-w-0">
+                            <div>
+                                <h3 class="text-sm font-bold text-black group-hover:text-primary transition-colors mb-1 line-clamp-2">${hotel.name}</h3>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <div class="flex gap-0.5">${starsHtml}</div>
+                                    <div class="flex items-center gap-1 bg-gray-50 px-1.5 py-0.5 rounded border border-gray-border">
+                                       <span class="text-xs font-semibold text-secondary">${hotel.rating}</span>
+                                       <span class="text-xxs text-text-muted hidden xl:inline">${hotel.ratingText}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-xs text-text-muted truncate flex items-center gap-1">
+                                <span class="material-icons-round text-lg text-text-muted">restaurant</span> ${hotel.boardType}
+                            </div>
+                        </div>
+                        <div class="flex flex-col justify-between items-end shrink-0 text-right min-w-[65px]">
+                            <div class="flex flex-col items-end">
+                                ${hotel.oldPrice ? `<div class="text-xxs text-text-muted line-through mb-0.5">£${hotel.oldPrice.toLocaleString()}</div>` : ''}
+                                <div class="text-base font-bold text-primary leading-none">£${hotel.price.toLocaleString()}</div>
+                            </div>
+                            <button class="px-3 h-8 bg-primary text-white rounded-lg text-xxs font-bold uppercase hover:bg-primary-hover shadow-sm transition-all text-center min-w-[56px] active:scale-95">
+                                View
+                            </button>
+                        </div>
+                    </div>
+                 </div>`;
+            }).join('');
+
+            htmlContent += `<div class="p-4 text-center text-xs text-text-muted mt-4 border-t border-gray-border bg-white rounded-lg">
+                <p class="mb-2 font-medium">Showing all available properties</p>
+                <p class="text-xxs">© 2025 easyGDS. All rights reserved.</p>
+            </div>`;
+            container.innerHTML = htmlContent;
+        }
+
+        function initMap() {
+            map = L.map('map', { zoomControl: false }).setView([25.14, 55.20], 11);
+            L.control.zoom({ position: 'bottomright' }).addTo(map);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap', maxZoom: 19 }).addTo(map);
+
+            hotels.forEach(hotel => {
+                const priceK = (hotel.price / 1000).toFixed(1) + 'k';
+                const icon = L.divIcon({
+                    className: 'custom-marker-wrapper',
+                    html: `<div class="custom-marker" id="marker-${hotel.id}"><div class="custom-marker-price">£${priceK}</div></div>`,
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 40]
+                });
+                const marker = L.marker(hotel.coordinates, { icon: icon, zIndexOffset: 0 }).addTo(map).on('click', () => selectHotel(hotel.id));
+                markers[hotel.id] = marker;
+            });
+
+            map.on('click', () => deselectAll());
+        }
+
+        function selectHotel(hotelId) {
+            if (selectedHotelId === hotelId) {
+                deselectAll();
+                return;
+            }
+
+            if (selectedHotelId) {
+                const prev = document.getElementById(`marker-${selectedHotelId}`);
+                if (prev) prev.classList.remove('active');
+                if (markers[selectedHotelId]) markers[selectedHotelId].setZIndexOffset(0);
+                const prevCard = document.getElementById(`hotel-card-${selectedHotelId}`);
+                if (prevCard) {
+                    prevCard.classList.remove('active', 'border-primary', 'bg-surface');
+                    prevCard.style.borderLeftWidth = '1px';
+                    prevCard.style.borderColor = '#E5E7EB';
+                }
+            }
+
+            selectedHotelId = hotelId;
+
+            const currMarker = document.getElementById(`marker-${hotelId}`);
+            if (currMarker) currMarker.classList.add('active');
+            if (markers[hotelId]) markers[hotelId].setZIndexOffset(1000);
+
+            const card = document.getElementById(`hotel-card-${hotelId}`);
+            if (card) {
+                card.classList.add('active', 'bg-surface');
+                card.style.borderLeftWidth = '3px';
+                card.style.borderColor = '#203C94';
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function deselectAll() {
+            if (selectedHotelId) {
+                const prev = document.getElementById(`marker-${selectedHotelId}`);
+                if (prev) prev.classList.remove('active');
+                if (markers[selectedHotelId]) markers[selectedHotelId].setZIndexOffset(0);
+                const prevCard = document.getElementById(`hotel-card-${selectedHotelId}`);
+                if (prevCard) {
+                    prevCard.classList.remove('active', 'border-primary', 'bg-surface');
+                    prevCard.style.borderLeftWidth = '1px';
+                    prevCard.style.borderColor = '#E5E7EB';
+                }
+                selectedHotelId = null;
+            }
+        }
+
+        function updateMapSearch() {
+            const btn = document.getElementById('search-area-btn');
+            btn.innerHTML = '<span class="material-icons-round text-lg">check</span> Updated';
+            setTimeout(() => {
+                btn.innerHTML = '<span class="material-icons-round text-lg">refresh</span> Search this area';
+            }, 1500);
+        }
+
+        function scrollRecs(dir) {
+            const c = document.getElementById('rec-container');
+            c.scrollBy({ left: dir === 'left' ? -300 : 300, behavior: 'smooth' });
+        }
+
+        function changeSlide(type, id, dir, event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            const hotel = hotels.find(h => h.id === id);
+            if (!hotel) return;
+
+            const images = [hotel.images[0], hotel.images[0], hotel.images[0]];
+            const imgEl = document.getElementById(`img-${type}-${id}`);
+            if (!imgEl) return;
+
+            let currentIdx = parseInt(imgEl.dataset.idx || '0');
+            let newIdx = currentIdx + dir;
+
+            if (newIdx < 0) newIdx = images.length - 1;
+            if (newIdx >= images.length) newIdx = 0;
+
+            imgEl.style.opacity = '0.75';
+            setTimeout(() => {
+                imgEl.src = images[newIdx];
+                imgEl.dataset.idx = newIdx;
+                imgEl.style.opacity = '1';
+            }, 200);
+        }
+    </script>
+</body>
+
+</html>

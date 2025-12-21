@@ -108,15 +108,27 @@ export function DesignPage() {
                     <div className="grid grid-cols-3 gap-6">
                       <ColorSwatch
                         label="Primary"
-                        colorName={designSystem.colors.primary}
+                        colorName={
+                          typeof designSystem.colors.primary === 'string'
+                            ? designSystem.colors.primary
+                            : designSystem.colors.primary.value || designSystem.colors.primary.name || ''
+                        }
                       />
                       <ColorSwatch
                         label="Secondary"
-                        colorName={designSystem.colors.secondary}
+                        colorName={
+                          typeof designSystem.colors.secondary === 'string'
+                            ? designSystem.colors.secondary
+                            : designSystem.colors.secondary.value || designSystem.colors.secondary.name || ''
+                        }
                       />
                       <ColorSwatch
                         label="Neutral"
-                        colorName={designSystem.colors.neutral}
+                        colorName={
+                          typeof designSystem.colors.neutral === 'string'
+                            ? designSystem.colors.neutral
+                            : designSystem.colors.neutral['500'] || designSystem.colors.neutral.value || ''
+                        }
                       />
                     </div>
                   </div>
@@ -132,19 +144,19 @@ export function DesignPage() {
                       <div>
                         <p className="text-xs text-stone-500 dark:text-stone-400 mb-1">Heading</p>
                         <p className="font-semibold text-stone-900 dark:text-stone-100">
-                          {designSystem.typography.heading}
+                          {renderTypographyValue(designSystem.typography.heading)}
                         </p>
                       </div>
                       <div>
                         <p className="text-xs text-stone-500 dark:text-stone-400 mb-1">Body</p>
                         <p className="text-stone-900 dark:text-stone-100">
-                          {designSystem.typography.body}
+                          {renderTypographyValue(designSystem.typography.body)}
                         </p>
                       </div>
                       <div>
                         <p className="text-xs text-stone-500 dark:text-stone-400 mb-1">Mono</p>
                         <p className="font-mono text-stone-900 dark:text-stone-100">
-                          {designSystem.typography.mono}
+                          {renderTypographyValue(designSystem.typography.mono)}
                         </p>
                       </div>
                     </div>
@@ -256,7 +268,10 @@ interface ColorSwatchProps {
 }
 
 function ColorSwatch({ label, colorName }: ColorSwatchProps) {
-  const colors = colorMap[colorName] || colorMap.stone
+  // Accept either a Tailwind color key (mapped in `colorMap`) or a hex value like "#203C94".
+  const colors = /^#/.test(colorName)
+    ? { light: colorName, base: colorName, dark: colorName }
+    : colorMap[colorName] || colorMap.stone
 
   return (
     <div>
@@ -281,4 +296,13 @@ function ColorSwatch({ label, colorName }: ColorSwatchProps) {
       <p className="text-xs text-stone-500 dark:text-stone-400">{colorName}</p>
     </div>
   )
+}
+
+function renderTypographyValue(value: any) {
+  if (!value) return ''
+  if (typeof value === 'string') return value
+  if (typeof value === 'object') {
+    return value.fontFamily || value.name || ''
+  }
+  return String(value)
 }

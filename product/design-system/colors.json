@@ -1,0 +1,27 @@
+{
+  "primary": {
+    "name": "Primary Blue",
+    "value": "#203C94",
+    "usage": "Primary brand color, buttons, links, accents"
+  },
+  "secondary": {
+    "name": "Teal",
+    "value": "#0891B2",
+    "usage": "Secondary accents, complementary actions, highlights"
+  },
+  "accent": {
+    "name": "Gold",
+    "value": "#FFB800",
+    "usage": "Highlights, ratings, special badges, call-to-action accents"
+  },
+  "neutral": {
+    "value": "slate",
+    "usage": "Backgrounds, borders, text, subtle UI elements"
+  },
+  "semantic": {
+    "success": "#4CAF50",
+    "error": "#EF4444",
+    "warning": "#FFB800",
+    "info": "#203C94"
+  }
+}

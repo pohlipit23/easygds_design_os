@@ -1,0 +1,528 @@
+{
+  "_meta": {
+    "models": {
+      "hotels": "Each hotel represents an accommodation property with name, location, star rating, amenities, and guest reviews.",
+      "rooms": "Room types within a hotel (deluxe, suite, standard) with bed type and capacity.",
+      "roomRates": "Pricing for each room including board type (room only, breakfast, half board, full board, all inclusive), refundability, taxes, and total price.",
+      "guestReviews": "Customer reviews and ratings for each hotel."
+    },
+    "relationships": [
+      "Each Hotel contains one or more Rooms (the different room types available)",
+      "Each Room has one or more Room Rates (different board types and cancellation policies)",
+      "Hotels include Guest Reviews from previous customers",
+      "Search results display Hotels with their best available Room and Rate"
+    ]
+  },
+  "hotels": [
+    {
+      "id": "hotel-001",
+      "name": "Burj Al Arab Jumeirah",
+      "brand": "Jumeirah",
+      "location": {
+        "address": "Jumeirah Beach Road",
+        "city": "Dubai",
+        "country": "United Arab Emirates",
+        "coordinates": { "lat": 25.1412, "lng": 55.1853 },
+        "nearbyAttractions": ["Burj Khalifa - 5km", "Dubai Mall - 6km", "Jumeirah Beach - 0.5km"]
+      },
+      "starRating": 5,
+      "guestRating": 9.4,
+      "reviewCount": 2847,
+      "description": "Experience unparalleled luxury at this iconic sail-shaped hotel offering stunning views of the Arabian Gulf, world-class dining, and exclusive beach access.",
+      "amenities": ["Free WiFi", "Pool", "Spa", "Beach Access", "Restaurant", "Bar", "Gym", "Room Service", "Concierge", "Valet Parking"],
+      "images": [
+        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800",
+        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800",
+        "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800"
+      ],
+      "policies": {
+        "checkIn": "15:00",
+        "checkOut": "12:00",
+        "cancellationPolicy": "Free cancellation up to 48 hours before check-in"
+      }
+    },
+    {
+      "id": "hotel-002",
+      "name": "Atlantis The Palm",
+      "brand": "Atlantis",
+      "location": {
+        "address": "Crescent Road, The Palm",
+        "city": "Dubai",
+        "country": "United Arab Emirates",
+        "coordinates": { "lat": 25.1308, "lng": 55.1173 },
+        "nearbyAttractions": ["Aquaventure Waterpark - On-site", "The Lost Chambers Aquarium - On-site", "Dubai Marina - 8km"]
+      },
+      "starRating": 5,
+      "guestRating": 9.1,
+      "reviewCount": 4521,
+      "description": "A majestic resort on the iconic Palm Jumeirah featuring an aquarium, waterpark, marine experiences, and exceptional dining options.",
+      "amenities": ["Free WiFi", "Pool", "Waterpark", "Aquarium", "Beach Access", "Multiple Restaurants", "Spa", "Kids Club", "Gym"],
+      "images": [
+        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800",
+        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800"
+      ],
+      "policies": {
+        "checkIn": "15:00",
+        "checkOut": "12:00",
+        "cancellationPolicy": "Free cancellation up to 72 hours before check-in"
+      }
+    },
+    {
+      "id": "hotel-003",
+      "name": "Address Downtown",
+      "brand": "Address Hotels + Resorts",
+      "location": {
+        "address": "Mohammed Bin Rashid Boulevard",
+        "city": "Dubai",
+        "country": "United Arab Emirates",
+        "coordinates": { "lat": 25.1972, "lng": 55.2744 },
+        "nearbyAttractions": ["Burj Khalifa - 0.3km", "Dubai Mall - 0.2km", "Dubai Fountain - 0.4km"]
+      },
+      "starRating": 5,
+      "guestRating": 8.9,
+      "reviewCount": 3102,
+      "description": "Modern luxury in the heart of Downtown Dubai with stunning views of Burj Khalifa and Dubai Fountain, steps from Dubai Mall.",
+      "amenities": ["Free WiFi", "Pool", "Gym", "Spa", "Restaurant", "Bar", "Room Service", "Valet Parking"],
+      "images": [
+        "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800",
+        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800"
+      ],
+      "policies": {
+        "checkIn": "15:00",
+        "checkOut": "12:00",
+        "cancellationPolicy": "Free cancellation up to 24 hours before check-in"
+      }
+    },
+    {
+      "id": "hotel-004",
+      "name": "Jumeirah Beach Hotel",
+      "brand": "Jumeirah",
+      "location": {
+        "address": "Jumeirah Beach Road",
+        "city": "Dubai",
+        "country": "United Arab Emirates",
+        "coordinates": { "lat": 25.1385, "lng": 55.1878 },
+        "nearbyAttractions": ["Wild Wadi Waterpark - Adjacent", "Burj Al Arab - 0.5km", "Madinat Jumeirah - 1km"]
+      },
+      "starRating": 5,
+      "guestRating": 9.0,
+      "reviewCount": 2956,
+      "description": "Family-friendly beachfront resort with unlimited access to Wild Wadi Waterpark and stunning views of Burj Al Arab.",
+      "amenities": ["Free WiFi", "Pool", "Waterpark Access", "Beach Access", "Kids Club", "Multiple Restaurants", "Spa", "Gym"],
+      "images": [
+        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800"
+      ],
+      "policies": {
+        "checkIn": "15:00",
+        "checkOut": "12:00",
+        "cancellationPolicy": "Free cancellation up to 48 hours before check-in"
+      }
+    },
+    {
+      "id": "hotel-005",
+      "name": "Rove Downtown",
+      "brand": "Rove Hotels",
+      "location": {
+        "address": "Happiness Street, Trade Centre",
+        "city": "Dubai",
+        "country": "United Arab Emirates",
+        "coordinates": { "lat": 25.2048, "lng": 55.2708 },
+        "nearbyAttractions": ["Dubai Mall - 2km", "Burj Khalifa - 2.5km", "City Walk - 1.5km"]
+      },
+      "starRating": 3,
+      "guestRating": 8.3,
+      "reviewCount": 1845,
+      "description": "Contemporary budget hotel in Downtown Dubai offering modern amenities, rooftop pool, and great value for money.",
+      "amenities": ["Free WiFi", "Pool", "Gym", "Restaurant", "24/7 Snack Bar", "Self-Service Laundry"],
+      "images": [
+        "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800"
+      ],
+      "policies": {
+        "checkIn": "14:00",
+        "checkOut": "12:00",
+        "cancellationPolicy": "Free cancellation up to 24 hours before check-in"
+      }
+    },
+    {
+      "id": "hotel-006",
+      "name": "Armani Hotel Dubai",
+      "brand": "Armani Hotels",
+      "location": {
+        "address": "Burj Khalifa, Sheikh Mohammed Bin Rashid Boulevard",
+        "city": "Dubai",
+        "country": "United Arab Emirates",
+        "coordinates": { "lat": 25.1972, "lng": 55.2744 },
+        "nearbyAttractions": ["At The Top, Burj Khalifa - In building", "Dubai Mall - 0.3km", "Souk Al Bahar - 0.5km"]
+      },
+      "starRating": 5,
+      "guestRating": 9.3,
+      "reviewCount": 1623,
+      "description": "Sleek, sophisticated hotel designed by Giorgio Armani located within the iconic Burj Khalifa tower.",
+      "amenities": ["Free WiFi", "Spa", "Fine Dining", "Bar", "Gym", "Room Service", "Concierge", "Valet Parking"],
+      "images": [
+        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800"
+      ],
+      "policies": {
+        "checkIn": "15:00",
+        "checkOut": "12:00",
+        "cancellationPolicy": "Non-refundable rate, no cancellations allowed"
+      }
+    },
+    {
+      "id": "hotel-007",
+      "name": "Hilton Dubai Jumeirah",
+      "brand": "Hilton",
+      "location": {
+        "address": "The Walk, Jumeirah Beach Residence",
+        "city": "Dubai",
+        "country": "United Arab Emirates",
+        "coordinates": { "lat": 25.0782, "lng": 55.1342 },
+        "nearbyAttractions": ["The Beach JBR - 0.2km", "Dubai Marina - 2km", "Ain Dubai - 3km"]
+      },
+      "starRating": 4,
+      "guestRating": 8.6,
+      "reviewCount": 2234,
+      "description": "Beachfront hotel at JBR with direct beach access, multiple dining options, and stunning sea views.",
+      "amenities": ["Free WiFi", "Pool", "Beach Access", "Multiple Restaurants", "Bar", "Gym", "Spa", "Kids Pool"],
+      "images": [
+        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800"
+      ],
+      "policies": {
+        "checkIn": "15:00",
+        "checkOut": "12:00",
+        "cancellationPolicy": "Free cancellation up to 48 hours before check-in"
+      }
+    },
+    {
+      "id": "hotel-008",
+      "name": "Vida Downtown",
+      "brand": "Vida Hotels",
+      "location": {
+        "address": "Sheikh Mohammed Bin Rashid Boulevard",
+        "city": "Dubai",
+        "country": "United Arab Emirates",
+        "coordinates": { "lat": 25.1925, "lng": 55.2762 },
+        "nearbyAttractions": ["Dubai Opera - 0.3km", "Dubai Mall - 1km", "Burj Khalifa - 1.2km"]
+      },
+      "starRating": 4,
+      "guestRating": 8.7,
+      "reviewCount": 1967,
+      "description": "Stylish lifestyle hotel in Downtown Dubai with contemporary design, rooftop pool, and vibrant dining scene.",
+      "amenities": ["Free WiFi", "Rooftop Pool", "Restaurant", "Bar", "Gym", "Room Service", "Meeting Rooms"],
+      "images": [
+        "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800"
+      ],
+      "policies": {
+        "checkIn": "15:00",
+        "checkOut": "12:00",
+        "cancellationPolicy": "Free cancellation up to 24 hours before check-in"
+      }
+    }
+  ],
+  "rooms": [
+    {
+      "id": "room-001",
+      "hotelId": "hotel-001",
+      "roomType": "Deluxe Suite",
+      "bedType": "King",
+      "capacity": 2,
+      "size": "55 sqm",
+      "amenities": ["Ocean View", "Balcony", "Marble Bathroom", "Rain Shower", "Separate Living Area", "Premium Toiletries"],
+      "images": ["https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600"]
+    },
+    {
+      "id": "room-002",
+      "hotelId": "hotel-001",
+      "roomType": "Panoramic Suite",
+      "bedType": "King",
+      "capacity": 3,
+      "size": "170 sqm",
+      "amenities": ["Panoramic Ocean View", "Jacuzzi", "Dining Area", "Butler Service", "Premium Minibar"],
+      "images": ["https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600"]
+    },
+    {
+      "id": "room-003",
+      "hotelId": "hotel-002",
+      "roomType": "Deluxe King",
+      "bedType": "King",
+      "capacity": 2,
+      "size": "45 sqm",
+      "amenities": ["City or Sea View", "Balcony", "Bathroom with Tub", "Minibar", "Coffee Machine"],
+      "images": ["https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600"]
+    },
+    {
+      "id": "room-004",
+      "hotelId": "hotel-002",
+      "roomType": "Imperial Club Suite",
+      "bedType": "King",
+      "capacity": 4,
+      "size": "120 sqm",
+      "amenities": ["Sea View", "Club Lounge Access", "Separate Living Room", "Complimentary Minibar", "Butler Service"],
+      "images": ["https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600"]
+    },
+    {
+      "id": "room-005",
+      "hotelId": "hotel-003",
+      "roomType": "Superior Room",
+      "bedType": "Queen",
+      "capacity": 2,
+      "size": "40 sqm",
+      "amenities": ["City View", "Floor-to-ceiling Windows", "Rain Shower", "Work Desk", "Smart TV"],
+      "images": ["https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600"]
+    },
+    {
+      "id": "room-006",
+      "hotelId": "hotel-003",
+      "roomType": "Fountain View Suite",
+      "bedType": "King",
+      "capacity": 3,
+      "size": "85 sqm",
+      "amenities": ["Dubai Fountain View", "Balcony", "Separate Living Area", "Walk-in Closet", "Premium Toiletries"],
+      "images": ["https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600"]
+    },
+    {
+      "id": "room-007",
+      "hotelId": "hotel-004",
+      "roomType": "Deluxe Family Room",
+      "bedType": "2 Queens",
+      "capacity": 4,
+      "size": "50 sqm",
+      "amenities": ["Sea View", "Balcony", "Sofa Bed", "Coffee Machine", "Kids Amenities"],
+      "images": ["https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600"]
+    },
+    {
+      "id": "room-008",
+      "hotelId": "hotel-005",
+      "roomType": "Rove Room",
+      "bedType": "Queen",
+      "capacity": 2,
+      "size": "22 sqm",
+      "amenities": ["City View", "Rain Shower", "Smart TV", "USB Charging Ports", "Work Desk"],
+      "images": ["https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600"]
+    },
+    {
+      "id": "room-009",
+      "hotelId": "hotel-006",
+      "roomType": "Armani Classic",
+      "bedType": "King",
+      "capacity": 2,
+      "size": "55 sqm",
+      "amenities": ["City or Fountain View", "Armani/Casa Furnishings", "Marble Bathroom", "Nespresso Machine", "Premium Linens"],
+      "images": ["https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600"]
+    },
+    {
+      "id": "room-010",
+      "hotelId": "hotel-007",
+      "roomType": "Deluxe Sea View",
+      "bedType": "King",
+      "capacity": 2,
+      "size": "38 sqm",
+      "amenities": ["Sea View", "Balcony", "Rain Shower", "Coffee Machine", "Mini Fridge"],
+      "images": ["https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600"]
+    },
+    {
+      "id": "room-011",
+      "hotelId": "hotel-008",
+      "roomType": "Vida Room",
+      "bedType": "King",
+      "capacity": 2,
+      "size": "32 sqm",
+      "amenities": ["City View", "Rain Shower", "Smart TV", "Work Desk", "Nespresso Machine"],
+      "images": ["https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600"]
+    }
+  ],
+  "roomRates": [
+    {
+      "id": "rate-001",
+      "roomId": "room-001",
+      "boardType": "All Inclusive",
+      "refundable": true,
+      "pricePerNight": 850.00,
+      "taxesAndFees": 127.50,
+      "totalPrice": 977.50,
+      "currency": "GBP"
+    },
+    {
+      "id": "rate-002",
+      "roomId": "room-001",
+      "boardType": "Half Board",
+      "refundable": true,
+      "pricePerNight": 720.00,
+      "taxesAndFees": 108.00,
+      "totalPrice": 828.00,
+      "currency": "GBP"
+    },
+    {
+      "id": "rate-003",
+      "roomId": "room-001",
+      "boardType": "Bed & Breakfast",
+      "refundable": false,
+      "pricePerNight": 650.00,
+      "taxesAndFees": 97.50,
+      "totalPrice": 747.50,
+      "currency": "GBP"
+    },
+    {
+      "id": "rate-004",
+      "roomId": "room-002",
+      "boardType": "All Inclusive",
+      "refundable": true,
+      "pricePerNight": 1500.00,
+      "taxesAndFees": 225.00,
+      "totalPrice": 1725.00,
+      "currency": "GBP"
+    },
+    {
+      "id": "rate-005",
+      "roomId": "room-003",
+      "boardType": "Bed & Breakfast",
+      "refundable": true,
+      "pricePerNight": 385.00,
+      "taxesAndFees": 57.75,
+      "totalPrice": 442.75,
+      "currency": "GBP"
+    },
+    {
+      "id": "rate-006",
+      "roomId": "room-003",
+      "boardType": "Room Only",
+      "refundable": false,
+      "pricePerNight": 325.00,
+      "taxesAndFees": 48.75,
+      "totalPrice": 373.75,
+      "currency": "GBP"
+    },
+    {
+      "id": "rate-007",
+      "roomId": "room-004",
+      "boardType": "All Inclusive",
+      "refundable": true,
+      "pricePerNight": 780.00,
+      "taxesAndFees": 117.00,
+      "totalPrice": 897.00,
+      "currency": "GBP"
+    },
+    {
+      "id": "rate-008",
+      "roomId": "room-005",
+      "boardType": "Bed & Breakfast",
+      "refundable": true,
+      "pricePerNight": 285.00,
+      "taxesAndFees": 42.75,
+      "totalPrice": 327.75,
+      "currency": "GBP"
+    },
+    {
+      "id": "rate-009",
+      "roomId": "room-005",
+      "boardType": "Room Only",
+      "refundable": false,
+      "pricePerNight": 245.00,
+      "taxesAndFees": 36.75,
+      "totalPrice": 281.75,
+      "currency": "GBP"
+    },
+    {
+      "id": "rate-010",
+      "roomId": "room-006",
+      "boardType": "Bed & Breakfast",
+      "refundable": true,
+      "pricePerNight": 495.00,
+      "taxesAndFees": 74.25,
+      "totalPrice": 569.25,
+      "currency": "GBP"
+    },
+    {
+      "id": "rate-011",
+      "roomId": "room-007",
+      "boardType": "Half Board",
+      "refundable": true,
+      "pricePerNight": 520.00,
+      "taxesAndFees": 78.00,
+      "totalPrice": 598.00,
+      "currency": "GBP"
+    },
+    {
+      "id": "rate-012",
+      "roomId": "room-008",
+      "boardType": "Room Only",
+      "refundable": true,
+      "pricePerNight": 95.00,
+      "taxesAndFees": 14.25,
+      "totalPrice": 109.25,
+      "currency": "GBP"
+    },
+    {
+      "id": "rate-013",
+      "roomId": "room-009",
+      "boardType": "Bed & Breakfast",
+      "refundable": false,
+      "pricePerNight": 680.00,
+      "taxesAndFees": 102.00,
+      "totalPrice": 782.00,
+      "currency": "GBP"
+    },
+    {
+      "id": "rate-014",
+      "roomId": "room-010",
+      "boardType": "Bed & Breakfast",
+      "refundable": true,
+      "pricePerNight": 195.00,
+      "taxesAndFees": 29.25,
+      "totalPrice": 224.25,
+      "currency": "GBP"
+    },
+    {
+      "id": "rate-015",
+      "roomId": "room-011",
+      "boardType": "Room Only",
+      "refundable": true,
+      "pricePerNight": 165.00,
+      "taxesAndFees": 24.75,
+      "totalPrice": 189.75,
+      "currency": "GBP"
+    }
+  ],
+  "guestReviews": [
+    {
+      "id": "review-001",
+      "hotelId": "hotel-001",
+      "guestName": "Sarah M.",
+      "rating": 10,
+      "title": "Absolutely Exceptional",
+      "comment": "The most luxurious hotel experience we've ever had. Every detail was perfect, from the stunning suite to the impeccable service. The beach access and spa were outstanding.",
+      "date": "2025-01-05",
+      "verified": true
+    },
+    {
+      "id": "review-002",
+      "hotelId": "hotel-002",
+      "guestName": "James P.",
+      "rating": 9,
+      "title": "Perfect for Families",
+      "comment": "The kids absolutely loved the waterpark and aquarium. Our suite was spacious and the dining options were excellent. Only minor complaint was the busy pool area during peak times.",
+      "date": "2024-12-28",
+      "verified": true
+    },
+    {
+      "id": "review-003",
+      "hotelId": "hotel-003",
+      "guestName": "Emma K.",
+      "rating": 9,
+      "title": "Unbeatable Location",
+      "comment": "You can't beat the location - right next to Dubai Mall and with amazing views of Burj Khalifa. The room was modern and comfortable. Would definitely stay again.",
+      "date": "2025-01-12",
+      "verified": true
+    },
+    {
+      "id": "review-004",
+      "hotelId": "hotel-005",
+      "guestName": "Michael R.",
+      "rating": 8,
+      "title": "Great Value",
+      "comment": "Excellent budget option in Downtown. The room was compact but had everything we needed. Rooftop pool was a nice touch. Perfect for travelers who want to spend time exploring rather than in the hotel.",
+      "date": "2025-01-08",
+      "verified": true
+    }
+  ]
+}
