@@ -58,179 +58,133 @@ export function RoomCard({ room, rates, nights, onSelect, onAddToBasket }: RoomC
   }
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden hover:border-slate-300 dark:hover:border-slate-600 transition-all">
-      <div className="grid md:grid-cols-[280px,1fr] gap-0">
+    <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-md transition-all">
+      <div className="flex flex-col md:flex-row">
         {/* Room Image */}
-        <div className="relative aspect-[4/3] md:aspect-auto bg-slate-100 dark:bg-slate-700">
+        <div className="relative w-full md:w-48 aspect-[4/3] md:aspect-auto bg-slate-100 dark:bg-slate-700 flex-shrink-0">
           <img
             src={room.images[0]}
             alt={room.roomType}
             className="w-full h-full object-cover"
           />
-          <div className="absolute top-3 left-3 bg-[#203C94] dark:bg-[#1A3994] text-white px-3 py-1 rounded-full text-xs font-bold">
-            {room.roomType}
-          </div>
         </div>
 
         {/* Room Details */}
-        <div className="p-6">
-          <div className="flex flex-col lg:flex-row gap-6">
-            {/* Left: Room Info */}
-            <div className="flex-grow">
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
-                {room.roomType}
-              </h3>
-
-              {/* Room Specs */}
-              <div className="flex flex-wrap gap-4 mb-4 text-sm text-slate-600 dark:text-slate-400">
-                <div className="flex items-center gap-1.5">
-                  <span className="material-icons-round text-[#0891B2] text-lg">bed</span>
-                  <span>{room.bedType}</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="material-icons-round text-[#0891B2] text-lg">person</span>
-                  <span>Up to {room.capacity} guests</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="material-icons-round text-[#0891B2] text-lg">square_foot</span>
-                  <span>{room.size}</span>
-                </div>
-              </div>
-
-              {/* Room Amenities */}
-              <div className="mb-4">
-                <div className="flex flex-wrap gap-2">
-                  {room.amenities.slice(0, 4).map((amenity, index) => (
-                    <span
-                      key={index}
-                      className="text-xs bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-full"
-                    >
-                      {amenity}
-                    </span>
-                  ))}
-                  {room.amenities.length > 4 && (
-                    <span className="text-xs text-[#203C94] dark:text-[#0891B2] font-semibold px-2.5 py-1">
-                      +{room.amenities.length - 4} more
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              {/* Board Type Options */}
-              <div className="border-t border-slate-200 dark:border-slate-700 pt-4">
-                <h4 className="text-xs font-bold uppercase text-slate-700 dark:text-slate-300 mb-3 tracking-wide">
-                  Choose your rate
-                </h4>
-                <div className="space-y-2">
-                  {visibleRates.map((rate) => {
-                    const totalForStay = rate.pricePerNight * nights
-                    const isSelected = rate.id === selectedRateId
-
-                    return (
-                      <button
-                        key={rate.id}
-                        onClick={() => setSelectedRateId(rate.id)}
-                        className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
-                          isSelected
-                            ? 'border-[#203C94] dark:border-[#0891B2] bg-[#203C94]/5 dark:bg-[#0891B2]/10'
-                            : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
-                        }`}
-                      >
-                        <div className="flex items-start justify-between">
-                          <div className="flex-grow">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="material-icons-round text-[#0891B2] text-lg">
-                                {getBoardTypeIcon(rate.boardType)}
-                              </span>
-                              <span className="font-semibold text-slate-900 dark:text-white">
-                                {rate.boardType}
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-2 text-xs">
-                              {rate.refundable ? (
-                                <span className="flex items-center gap-1 text-green-600 dark:text-green-500">
-                                  <span className="material-icons-round text-sm">check_circle</span>
-                                  Free cancellation
-                                </span>
-                              ) : (
-                                <span className="flex items-center gap-1 text-amber-600 dark:text-amber-500">
-                                  <span className="material-icons-round text-sm">block</span>
-                                  Non-refundable
-                                </span>
-                              )}
-                            </div>
-                          </div>
-
-                          <div className="text-right flex-shrink-0 ml-4">
-                            {rate.oldPrice && (
-                              <div className="text-xs text-slate-500 dark:text-slate-400 line-through mb-0.5">
-                                £{rate.oldPrice.toFixed(2)}
-                              </div>
-                            )}
-                            <div className="font-bold text-slate-900 dark:text-white">
-                              £{rate.pricePerNight.toFixed(2)}
-                            </div>
-                            <div className="text-xs text-slate-600 dark:text-slate-400">
-                              per night
-                            </div>
-                          </div>
-                        </div>
-                      </button>
-                    )
-                  })}
-
-                  {rates.length > 2 && (
-                    <button
-                      onClick={() => setShowAllRates(!showAllRates)}
-                      className="w-full py-2 text-xs font-semibold text-[#203C94] dark:text-[#0891B2] hover:underline"
-                    >
-                      {showAllRates ? 'Show fewer rates' : `Show ${rates.length - 2} more rates`}
-                    </button>
-                  )}
-                </div>
-              </div>
+        <div className="flex-grow p-4">
+          {/* Room Title & Info */}
+          <div className="mb-3">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">
+              {room.roomType}
+            </h3>
+            <div className="flex flex-wrap gap-3 text-xs text-slate-600 dark:text-slate-400">
+              <span>{room.bedType}</span>
+              <span>•</span>
+              <span>{room.size}</span>
+              <span>•</span>
+              <span>{room.capacity > 1 ? `${room.capacity} guests` : `${room.capacity} guest`}</span>
             </div>
+          </div>
 
-            {/* Right: Price & Action */}
-            <div className="flex-shrink-0 lg:w-56 border-t lg:border-t-0 lg:border-l border-slate-200 dark:border-slate-700 pt-6 lg:pt-0 lg:pl-6">
-              <div className="sticky top-24">
-                <div className="text-xs text-slate-600 dark:text-slate-400 mb-2">
-                  Total for {nights} {nights === 1 ? 'night' : 'nights'}
-                </div>
-                <div className="mb-1">
-                  {selectedRate.oldPrice && (
-                    <div className="text-sm text-slate-500 dark:text-slate-400 line-through">
-                      £{(selectedRate.oldPrice * nights).toFixed(2)}
+          {/* Room Details Button */}
+          <button
+            onClick={() => onSelect?.(selectedRateId)}
+            className="text-xs text-[#203C94] dark:text-[#0891B2] font-semibold hover:underline mb-3"
+          >
+            Room details
+          </button>
+
+          {/* Badges */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {room.amenities.slice(0, 2).map((amenity, index) => (
+              <span
+                key={index}
+                className="inline-flex items-center gap-1 text-xs bg-[#0891B2]/10 text-[#0891B2] dark:bg-[#0891B2]/20 px-2 py-0.5 rounded"
+              >
+                <span className="material-icons-round text-xs">check</span>
+                {amenity}
+              </span>
+            ))}
+          </div>
+
+          {/* Board Type & Rate Options */}
+          <div className="space-y-2">
+            <h4 className="text-xs font-bold uppercase text-slate-700 dark:text-slate-300 mb-2">
+              Board Type
+            </h4>
+
+            {visibleRates.map((rate) => {
+              const isSelected = rate.id === selectedRateId
+              const totalPrice = rate.pricePerNight * nights
+
+              return (
+                <div
+                  key={rate.id}
+                  className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg"
+                >
+                  <div className="flex-grow">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-sm font-semibold text-slate-900 dark:text-white">
+                        {rate.boardType}
+                      </span>
+                      {rate.oldPrice && (
+                        <span className="text-xs text-green-600 dark:text-green-500 font-semibold">
+                          +£{((rate.oldPrice - rate.pricePerNight) * nights).toFixed(0)}
+                        </span>
+                      )}
                     </div>
-                  )}
-                  <div className="text-3xl font-bold text-[#203C94] dark:text-[#0891B2]">
-                    £{(selectedRate.pricePerNight * nights).toFixed(2)}
+                    <div className="text-xs text-slate-600 dark:text-slate-400">
+                      {rate.refundable ? (
+                        <span className="text-green-600 dark:text-green-500">
+                          Fully refundable
+                        </span>
+                      ) : (
+                        <span className="text-amber-600 dark:text-amber-500">
+                          Non-refundable
+                        </span>
+                      )}
+                      {' • '}
+                      <button
+                        onClick={() => onSelect?.(rate.id)}
+                        className="text-[#203C94] dark:text-[#0891B2] hover:underline"
+                      >
+                        Details
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 ml-4">
+                    <div className="text-right">
+                      {rate.oldPrice && (
+                        <div className="text-xs text-slate-500 dark:text-slate-400 line-through">
+                          +£{rate.oldPrice.toFixed(0)}
+                        </div>
+                      )}
+                      <div className="text-lg font-bold text-[#FFB800]">
+                        +£{rate.pricePerNight.toFixed(0)}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setSelectedRateId(rate.id)
+                        onAddToBasket?.(rate.id)
+                      }}
+                      className="px-4 h-9 bg-[#FFB800] hover:bg-[#E5A600] text-slate-900 font-bold text-xs rounded transition-all flex-shrink-0"
+                    >
+                      Select
+                    </button>
                   </div>
                 </div>
-                <div className="text-xs text-slate-600 dark:text-slate-400 mb-4">
-                  +£{selectedRate.taxesAndFees.toFixed(2)} taxes & fees
-                </div>
+              )
+            })}
 
-                {selectedRate.oldPrice && (
-                  <div className="bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-xs font-semibold px-3 py-2 rounded-lg mb-4">
-                    Save £{((selectedRate.oldPrice - selectedRate.pricePerNight) * nights).toFixed(2)}
-                  </div>
-                )}
-
-                <button
-                  onClick={() => onAddToBasket?.(selectedRateId)}
-                  className="w-full h-11 bg-[#203C94] dark:bg-[#0891B2] text-white font-bold uppercase text-xs rounded-lg hover:bg-[#1A3994] dark:hover:bg-[#06829A] hover:shadow-lg transition-all active:scale-95 mb-2"
-                >
-                  Add to Basket
-                </button>
-                <button
-                  onClick={() => onSelect?.(selectedRateId)}
-                  className="w-full h-10 border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 font-semibold text-xs rounded-lg hover:border-[#203C94] dark:hover:border-[#0891B2] hover:text-[#203C94] dark:hover:text-[#0891B2] transition-all"
-                >
-                  View Details
-                </button>
-              </div>
-            </div>
+            {rates.length > visibleRates.length && (
+              <button
+                onClick={() => setShowAllRates(!showAllRates)}
+                className="text-xs font-semibold text-[#203C94] dark:text-[#0891B2] hover:underline"
+              >
+                {showAllRates ? 'Show fewer options' : `+${rates.length - visibleRates.length} more options`}
+              </button>
+            )}
           </div>
         </div>
       </div>
