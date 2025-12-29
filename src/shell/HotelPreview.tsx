@@ -25,7 +25,7 @@ export default function HotelPreview() {
       productType="hotel"
       showContextBar={true}
       searchContext={searchContext}
-      productData={productData}
+      productContext={productData}
     >
       <div className="container mx-auto px-4 md:px-6 py-8">
         {/* Hotel Search Results Content */}

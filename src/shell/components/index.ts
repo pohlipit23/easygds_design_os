@@ -4,7 +4,6 @@ export { SearchWidget } from './SearchWidget';
 export type { SearchFormData } from './SearchWidget';
 export { ProductDetails } from './ProductDetails';
 export type { ProductType } from './ProductDetails';
-export { FlightDetails } from './FlightDetails';
 export { RegionalSettings } from './RegionalSettings';
 export type { RegionalPreferences } from './RegionalSettings';
 export { ContextBar } from './ContextBar';

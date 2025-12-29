@@ -22,6 +22,7 @@ export interface RoomRate {
   roomId: string;
   boardType: 'Room Only' | 'Bed & Breakfast' | 'Half Board' | 'Full Board' | 'All Inclusive';
   pricePerNight: number;
+  oldPrice?: number;
   totalPrice: number;
   currency: string;
   isRefundable: boolean;

@@ -9,6 +9,29 @@ import type { RegionalPreferences } from './RegionalSettings';
 import { ContextBar } from './ContextBar';
 import { Footer } from './Footer';
 
+interface FlightSearchContext {
+  from: string;
+  to: string;
+  dates: string;
+  passengers: string;
+}
+
+interface HotelSearchContext {
+  destination: string;
+  dates: string;
+  guests: string;
+}
+
+interface CarSearchContext {
+  location: string;
+  dates: string;
+}
+
+interface TourSearchContext {
+  destination: string;
+  dates: string;
+}
+
 interface FlightData {
   departTime: string;
   departCode: string;
@@ -53,18 +76,10 @@ interface TourData {
 
 interface AppShellProps {
   children: React.ReactNode;
-  productType?: ProductType;
   showContextBar?: boolean;
-  searchContext?: {
-    from?: string;
-    to?: string;
-    destination?: string;
-    location?: string;
-    dates: string;
-    passengers?: string;
-    guests?: string;
-  };
-  productData?: {
+  productType?: ProductType;
+  searchContext?: FlightSearchContext | HotelSearchContext | CarSearchContext | TourSearchContext;
+  productContext?: {
     outbound?: FlightData;
     return?: FlightData;
     hotel?: HotelData;
@@ -75,10 +90,10 @@ interface AppShellProps {
 
 export function AppShell({
   children,
-  productType = 'flight',
   showContextBar = false,
+  productType = 'flight',
   searchContext,
-  productData,
+  productContext
 }: AppShellProps) {
   const [searchWidgetOpen, setSearchWidgetOpen] = useState(false);
   const [productDetailsOpen, setProductDetailsOpen] = useState(false);
@@ -102,110 +117,80 @@ export function AppShell({
     console.log('Regional settings updated:', settings);
   };
 
-  // Build flight context for Header mobile dropdown (backward compatibility)
-  const flightContext =
-    productData?.outbound && productData?.return
+  // Build header context for mobile dropdown (flight/package only)
+  const headerFlightContext =
+    (productType === 'flight' || productType === 'package') &&
+    productContext?.outbound &&
+    productContext?.return
       ? {
           outbound: {
-            time: productData.outbound.departTime,
-            code: productData.outbound.departCode,
-            flight: productData.outbound.flightNumber,
+            time: productContext.outbound.departTime,
+            code: productContext.outbound.departCode,
+            flight: productContext.outbound.flightNumber,
           },
           return: {
-            time: productData.return.departTime,
-            code: productData.return.departCode,
-            flight: productData.return.flightNumber,
+            time: productContext.return.departTime,
+            code: productContext.return.departCode,
+            flight: productContext.return.flightNumber,
           },
         }
       : undefined;
 
   // Build product summary for ContextBar
   const buildProductSummary = () => {
-    if (!productData) return undefined;
+    if (!productContext) return undefined;
 
     switch (productType) {
       case 'flight':
       case 'package':
-        if (productData.outbound && productData.return) {
+        if (productContext.outbound && productContext.return) {
           return {
             outbound: {
-              time: productData.outbound.departTime,
-              code: productData.outbound.departCode,
-              flight: productData.outbound.flightNumber,
+              time: productContext.outbound.departTime,
+              code: productContext.outbound.departCode,
+              flight: productContext.outbound.flightNumber,
             },
             return: {
-              time: productData.return.departTime,
-              code: productData.return.departCode,
-              flight: productData.return.flightNumber,
+              time: productContext.return.departTime,
+              code: productContext.return.departCode,
+              flight: productContext.return.flightNumber,
             },
           };
         }
         return undefined;
 
       case 'hotel':
-        if (productData.hotel) {
+        if (productContext.hotel) {
           return {
-            name: productData.hotel.name,
-            checkIn: productData.hotel.checkIn,
-            checkOut: productData.hotel.checkOut,
+            name: productContext.hotel.name,
+            checkIn: productContext.hotel.checkIn,
+            checkOut: productContext.hotel.checkOut,
           };
         }
         return undefined;
 
       case 'car':
-        if (productData.car) {
+        if (productContext.car) {
           return {
-            vehicleType: productData.car.vehicleType,
-            pickupLocation: productData.car.pickupLocation,
-            dropoffLocation: productData.car.dropoffLocation,
+            vehicleType: productContext.car.vehicleType,
+            pickupLocation: productContext.car.pickupLocation,
+            dropoffLocation: productContext.car.dropoffLocation,
           };
         }
         return undefined;
 
       case 'tour':
-        if (productData.tour) {
+        if (productContext.tour) {
           return {
-            name: productData.tour.name,
-            date: productData.tour.date,
-            time: productData.tour.time,
+            name: productContext.tour.name,
+            date: productContext.tour.date,
+            time: productContext.tour.time,
           };
         }
         return undefined;
-    }
-  };
 
-  // Build search summary for ContextBar
-  const buildSearchSummary = () => {
-    if (!searchContext) return undefined;
-
-    switch (productType) {
-      case 'flight':
-      case 'package':
-        return {
-          from: searchContext.from || '',
-          to: searchContext.to || '',
-          dates: searchContext.dates,
-          passengers: searchContext.passengers || '1 Adult',
-        };
-
-      case 'hotel':
-        return {
-          destination: searchContext.destination || '',
-          dates: searchContext.dates,
-          guests: searchContext.guests || '1 Adult',
-        };
-
-      case 'car':
-        return {
-          location: searchContext.location || '',
-          dates: searchContext.dates,
-        };
-
-      case 'tour':
-        return {
-          destination: searchContext.destination || '',
-          dates: searchContext.dates,
-        };
+      default:
+        return undefined;
     }
   };
 
@@ -217,40 +202,10 @@ export function AppShell({
         onRegionalSettingsToggle={() => setRegionalSettingsOpen(!regionalSettingsOpen)}
         onFlightDetailsToggle={() => setProductDetailsOpen(!productDetailsOpen)}
         searchContext={searchContext}
-        flightContext={flightContext}
+        flightContext={headerFlightContext}
         currentCurrency={regionalPreferences.currency}
         currentFlag={regionalPreferences.countryCode}
       />
-
-      {/* Context Bar (Desktop) */}
-      {showContextBar && searchContext && (
-        <ContextBar
-          productType={productType}
-          searchSummary={buildSearchSummary()!}
-          productSummary={buildProductSummary()}
-          onModifySearch={() => setSearchWidgetOpen(true)}
-          onProductDetailsClick={() => setProductDetailsOpen(!productDetailsOpen)}
-        />
-      )}
-
-      {/* Search Widget - Dropdown below context bar */}
-      <SearchWidget
-        isOpen={searchWidgetOpen}
-        onClose={() => setSearchWidgetOpen(false)}
-        onUpdate={handleSearchUpdate}
-        defaultValues={searchContext}
-        productType={productType}
-      />
-
-      {/* Product Details - Dropdown below context bar */}
-      {productData && (
-        <ProductDetails
-          isOpen={productDetailsOpen}
-          onClose={() => setProductDetailsOpen(false)}
-          productType={productType}
-          data={productData}
-        />
-      )}
 
       {/* Regional Settings Modal */}
       <RegionalSettings
@@ -260,8 +215,39 @@ export function AppShell({
         currentSettings={regionalPreferences}
       />
 
+      {/* Context Bar (Desktop) - Sticky at top */}
+      {showContextBar && searchContext && (
+        <ContextBar
+          productType={productType}
+          searchSummary={searchContext}
+          productSummary={buildProductSummary()}
+          onModifySearch={() => setSearchWidgetOpen(true)}
+          onProductDetailsClick={() => setProductDetailsOpen(!productDetailsOpen)}
+        />
+      )}
+
+      {/* Search Widget - Expands below context bar */}
+      <SearchWidget
+        isOpen={searchWidgetOpen}
+        onClose={() => setSearchWidgetOpen(false)}
+        onUpdate={handleSearchUpdate}
+        defaultValues={searchContext}
+      />
+
+      {/* Product Details - Expands below context bar */}
+      {productContext && (
+        <ProductDetails
+          isOpen={productDetailsOpen}
+          onClose={() => setProductDetailsOpen(false)}
+          productType={productType}
+          data={productContext}
+        />
+      )}
+
       {/* Main Content */}
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow">
+        {children}
+      </main>
 
       {/* Footer */}
       <Footer />

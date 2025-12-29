@@ -338,6 +338,7 @@
       "boardType": "All Inclusive",
       "refundable": true,
       "pricePerNight": 850.00,
+      "oldPrice": 950.00,
       "taxesAndFees": 127.50,
       "totalPrice": 977.50,
       "currency": "GBP"
@@ -368,6 +369,7 @@
       "boardType": "All Inclusive",
       "refundable": true,
       "pricePerNight": 1500.00,
+      "oldPrice": 1750.00,
       "taxesAndFees": 225.00,
       "totalPrice": 1725.00,
       "currency": "GBP"
@@ -378,6 +380,7 @@
       "boardType": "Bed & Breakfast",
       "refundable": true,
       "pricePerNight": 385.00,
+      "oldPrice": 450.00,
       "taxesAndFees": 57.75,
       "totalPrice": 442.75,
       "currency": "GBP"
@@ -408,6 +411,7 @@
       "boardType": "Bed & Breakfast",
       "refundable": true,
       "pricePerNight": 285.00,
+      "oldPrice": 320.00,
       "taxesAndFees": 42.75,
       "totalPrice": 327.75,
       "currency": "GBP"
@@ -448,6 +452,7 @@
       "boardType": "Room Only",
       "refundable": true,
       "pricePerNight": 95.00,
+      "oldPrice": 125.00,
       "taxesAndFees": 14.25,
       "totalPrice": 109.25,
       "currency": "GBP"
@@ -458,6 +463,7 @@
       "boardType": "Bed & Breakfast",
       "refundable": false,
       "pricePerNight": 680.00,
+      "oldPrice": 750.00,
       "taxesAndFees": 102.00,
       "totalPrice": 782.00,
       "currency": "GBP"
@@ -468,6 +474,7 @@
       "boardType": "Bed & Breakfast",
       "refundable": true,
       "pricePerNight": 195.00,
+      "oldPrice": 230.00,
       "taxesAndFees": 29.25,
       "totalPrice": 224.25,
       "currency": "GBP"
