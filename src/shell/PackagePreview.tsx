@@ -44,7 +44,7 @@ export default function PackagePreview() {
       productType="package"
       showContextBar={true}
       searchContext={searchContext}
-      productData={productData}
+      productContext={productData}
     >
       <div className="container mx-auto px-4 md:px-6 py-8">
         {/* Package Search Results Content */}

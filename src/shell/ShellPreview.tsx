@@ -116,9 +116,18 @@ export default function ShellPreview() {
           productType="package"
           showContextBar={true}
           searchContext={packageSearchContext}
-          productData={packageProductData}
+          productContext={packageProductData}
         >
-          {/* Shell preview - content area intentionally empty */}
+          <div className="container mx-auto px-6 py-8">
+            <div className="text-center text-slate-500">
+              <p className="text-sm mb-2">This demonstrates the package flow shell with:</p>
+              <ul className="text-xs space-y-1">
+                <li>• Flight itinerary summary in the context bar</li>
+                <li>• Hotel details included in product details panel</li>
+                <li>• Click the flight summary to view full package details</li>
+              </ul>
+            </div>
+          </div>
         </AppShell>
       )}
 
@@ -128,9 +137,18 @@ export default function ShellPreview() {
           productType="hotel"
           showContextBar={true}
           searchContext={hotelSearchContext}
-          productData={hotelProductData}
+          productContext={hotelProductData}
         >
-          {/* Shell preview - content area intentionally empty */}
+          <div className="container mx-auto px-6 py-8">
+            <div className="text-center text-slate-500">
+              <p className="text-sm mb-2">This demonstrates the hotel-only flow shell with:</p>
+              <ul className="text-xs space-y-1">
+                <li>• Hotel summary in the context bar</li>
+                <li>• Hotel-specific search summary</li>
+                <li>• Click the hotel summary to view full details</li>
+              </ul>
+            </div>
+          </div>
         </AppShell>
       )}
     </div>

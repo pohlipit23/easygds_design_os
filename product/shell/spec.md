@@ -3,6 +3,8 @@
 ## Overview
 The application shell provides the persistent navigation, search controls, and layout structure that wraps all booking flows in the easyGDS platform. It adapts responsively across desktop and mobile devices while maintaining consistent branding and user experience.
 
+The shell is **product-type aware** and automatically adapts its display based on the current booking flow (flight, hotel, package, car rental, or tour), showing the appropriate search summary, product summary, and expandable details for each product type.
+
 ## Design Tokens
 - **Primary Color**: #203C94 (deep blue) - buttons, links, main accents
 - **Secondary Color**: #0891B2 (teal) - secondary accents, complementary actions, highlights
@@ -10,9 +12,56 @@ The application shell provides the persistent navigation, search controls, and l
 - **Neutral Color**: slate - backgrounds, borders, text, subtle UI elements
 - **Typography**: Raleway (400-800 weights)
 - **Icons**: Material Icons Round
-- **Border Radius**: 8px for cards, 50% for buttons/avatars
+- **Border Radius**: 8px (rounded-lg) for cards/inputs, 50% (rounded-full) for icon buttons
 - **Shadows**: Subtle (0 1px 3px rgba(0,0,0,0.08)) to medium (0 4px 12px rgba(0,0,0,0.1))
 - **Transitions**: 150-200ms cubic-bezier(0.4, 0, 0.2, 1)
+
+### Navigational Elements
+- **Primary Action Button**:
+  - Height: 44px (`h-11`)
+  - Style: Primary Blue background, White text, Uppercase, Bold (text-xs)
+  - Interactive: Hover shadow-lg, Active scale-95, Transition-all
+- **Secondary/Filter Button**:
+  - Height: 40px (`h-10`)
+  - Style: White background, Slate-200 border, Slate-700 text, Uppercase, Bold
+  - Dark Mode: Slate-800 background, Slate-700 border, Slate-200 text
+- **Icon Button (Circular)**:
+  - Size: 36px (`w-9 h-9`)
+  - Style: White/90 backdrop, Primary Blue icon, Shadow-md
+  - Usage: Carousel controls, toggles
+- **Text Input**:
+  - Height: 40px (`h-10`)
+  - Style: Slate-50 background, Slate-200 border, Focus ring Primary/20
+  - Typography: Text-sm font-medium
+
+## Product Type Support
+
+The shell components support all product types with adaptive content:
+
+### Flight-Only Flow
+- **Context Bar**: Displays flight route, dates, and passenger count
+- **Product Summary**: Shows outbound and return flight times
+- **Product Details Panel**: Full flight itinerary with departure/arrival times, airport codes, duration, flight numbers, and class
+
+### Hotel-Only Flow
+- **Context Bar**: Displays destination, dates, and guest count
+- **Product Summary**: Shows hotel name and check-in/check-out dates
+- **Product Details Panel**: Hotel details with star rating, room type, board type, nights, and guest information
+
+### Package Flow (Flight + Hotel)
+- **Context Bar**: Displays flight route, dates, and passenger count
+- **Product Summary**: Shows outbound and return flight times
+- **Product Details Panel**: Combined view with full flight itinerary PLUS hotel details below
+
+### Car Rental Flow
+- **Context Bar**: Displays pick-up location and dates
+- **Product Summary**: Shows vehicle type and pick-up/drop-off locations
+- **Product Details Panel**: Pick-up and drop-off details with vehicle information
+
+### Tours & Activities Flow
+- **Context Bar**: Displays destination and date
+- **Product Summary**: Shows tour name, date, and time
+- **Product Details Panel**: Tour description, date, time, duration, and participant count
 
 ## Components
 

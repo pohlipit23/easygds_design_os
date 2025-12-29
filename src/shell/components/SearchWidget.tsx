@@ -203,7 +203,7 @@ export function SearchWidget({
   };
 
   return (
-    <div className="bg-white border-b border-slate-200 shadow-lg animate-fade-in-down">
+    <div className="bg-white border-b border-slate-200 shadow-lg animate-fade-in-down z-30 relative">
       <div className="container mx-auto px-4 md:px-6 py-4 bg-white relative">
         <button
           onClick={onClose}

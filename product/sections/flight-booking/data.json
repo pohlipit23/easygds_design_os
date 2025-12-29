@@ -1,0 +1,264 @@
+{
+    "_meta": {
+        "models": {
+            "flights": "Individual flight segments with operational details.",
+            "flightOffers": "Bookable flight options combining segments, pricing, and fare rules.",
+            "searchParams": "Current search context driving the results."
+        },
+        "relationships": [
+            "Flight Offer contains one or more flight segments",
+            "Flight Offer has Pricing details"
+        ]
+    },
+    "searchParams": {
+        "origin": {
+            "code": "LHR",
+            "name": "London Heathrow",
+            "city": "London"
+        },
+        "destination": {
+            "code": "SYD",
+            "name": "Kingsford Smith",
+            "city": "Sydney"
+        },
+        "departureDate": "2024-11-13",
+        "returnDate": "2024-11-27",
+        "passengers": {
+            "adults": 2,
+            "children": 0,
+            "infants": 0
+        },
+        "cabinClass": "Economy"
+    },
+    "outboundOffers": [
+        {
+            "id": "off-001",
+            "airline": {
+                "code": "MH",
+                "name": "Malaysia Airlines",
+                "logo": "https://lh3.googleusercontent.com/aida-public/AB6AXuBnGgA3BaU1gUKYUFU6htACOss54Sg3PuKKPtY_dVXG-y15HccbqkLR7hhGohYPCHv6HHulJOz2URjAK3tYmF4rLgFPOHU-FNZxRh8FvDDq--LMOWoCnUHTY6gMJ7E3ZbQsYXGFObc2joI28A6KNheujc2s5T4wxhbqTh1G0I-_9RqHgHpXzR7JPQ8XFuotIlsq5g50op5M6tzoCTRh50_3lUEL6NI67bYM6fnphqzezfJLf4fLL4ZsY5ytKqj6sdSbNX3wdyfDex0"
+            },
+            "flightNumber": "MH001",
+            "departure": {
+                "airport": {
+                    "code": "LHR",
+                    "name": "London Heathrow"
+                },
+                "time": "2024-11-13T18:10:00"
+            },
+            "arrival": {
+                "airport": {
+                    "code": "SYD",
+                    "name": "Kingsford Smith"
+                },
+                "time": "2024-11-15T05:00:00"
+            },
+            "duration": "24h 50m",
+            "stops": 1,
+            "layover": {
+                "airport": {
+                    "code": "KUL",
+                    "name": "Kuala Lumpur"
+                },
+                "duration": "2h 20m"
+            },
+            "price": {
+                "amount": 1150,
+                "currency": "GBP",
+                "perPerson": true
+            },
+            "baggage": "2 pieces",
+            "cabin": "Economy (Q, B)",
+            "aircraft": "Airbus A350-900",
+            "fareRules": {
+                "refundable": false,
+                "changeable": true,
+                "changeFee": 100
+            }
+        },
+        {
+            "id": "off-002",
+            "airline": {
+                "code": "SQ",
+                "name": "Singapore Airlines",
+                "logo": "https://lh3.googleusercontent.com/aida-public/AB6AXuDbc4nf53q6V_eHFE0z61VTnKPReHrPI2culuO7djhZGr095VkT-JQki7-5vdlZpMn9WOtLkUHWnJgiZYi03Oc_dnk4baQSdgh8MaO873X_m_yWyUzaL3dISMIIr8vjtEPGC0YPTWN-aUKbxBV3FKCSBNIyqdpGJ2-HkXWjFN7EcljocPE2m15pz_L040rOVKsnqVtg1bfNl280oEjChsBq3eBGQvbfa9MZ6h5T-YURTUF8GyScH9QNIan9o1Yn7WkiHgPfEmr1eEQ"
+            },
+            "flightNumber": "SQ305",
+            "departure": {
+                "airport": {
+                    "code": "LHR",
+                    "name": "London Heathrow"
+                },
+                "time": "2024-11-13T09:25:00"
+            },
+            "arrival": {
+                "airport": {
+                    "code": "SYD",
+                    "name": "Kingsford Smith"
+                },
+                "time": "2024-11-14T18:45:00"
+            },
+            "duration": "22h 20m",
+            "stops": 1,
+            "layover": {
+                "airport": {
+                    "code": "SIN",
+                    "name": "Singapore Changi"
+                },
+                "duration": "1h 45m"
+            },
+            "price": {
+                "amount": 1350,
+                "currency": "GBP",
+                "perPerson": true
+            },
+            "baggage": "30 kg",
+            "cabin": "Economy (Standard)",
+            "aircraft": "Boeing 777-300ER",
+            "fareRules": {
+                "refundable": true,
+                "changeable": true,
+                "changeFee": 50
+            }
+        },
+        {
+            "id": "off-003",
+            "airline": {
+                "code": "BA",
+                "name": "British Airways",
+                "logo": "https://cms.britishairways.com/dam/ba-com/global/logos/ba-logo-speedmarque-blue.svg"
+            },
+            "flightNumber": "BA015",
+            "departure": {
+                "airport": {
+                    "code": "LHR",
+                    "name": "London Heathrow"
+                },
+                "time": "2024-11-13T20:40:00"
+            },
+            "arrival": {
+                "airport": {
+                    "code": "SYD",
+                    "name": "Kingsford Smith"
+                },
+                "time": "2024-11-15T06:10:00"
+            },
+            "duration": "22h 30m",
+            "stops": 1,
+            "layover": {
+                "airport": {
+                    "code": "SIN",
+                    "name": "Singapore Changi"
+                },
+                "duration": "1h 30m"
+            },
+            "price": {
+                "amount": 1600,
+                "currency": "GBP",
+                "perPerson": true
+            },
+            "baggage": "23 kg (1 piece)",
+            "cabin": "Economy",
+            "aircraft": "Boeing 787-9",
+            "fareRules": {
+                "refundable": false,
+                "changeable": true,
+                "changeFee": 150
+            }
+        }
+    ],
+    "returnOffers": [
+        {
+            "id": "ret-001",
+            "airline": {
+                "code": "MH",
+                "name": "Malaysia Airlines",
+                "logo": "https://lh3.googleusercontent.com/aida-public/AB6AXuBnGgA3BaU1gUKYUFU6htACOss54Sg3PuKKPtY_dVXG-y15HccbqkLR7hhGohYPCHv6HHulJOz2URjAK3tYmF4rLgFPOHU-FNZxRh8FvDDq--LMOWoCnUHTY6gMJ7E3ZbQsYXGFObc2joI28A6KNheujc2s5T4wxhbqTh1G0I-_9RqHgHpXzR7JPQ8XFuotIlsq5g50op5M6tzoCTRh50_3lUEL6NI67bYM6fnphqzezfJLf4fLL4ZsY5ytKqj6sdSbNX3wdyfDex0"
+            },
+            "flightNumber": "MH122",
+            "departure": {
+                "airport": {
+                    "code": "SYD",
+                    "name": "Kingsford Smith"
+                },
+                "time": "2024-11-27T14:15:00"
+            },
+            "arrival": {
+                "airport": {
+                    "code": "LHR",
+                    "name": "London Heathrow"
+                },
+                "time": "2024-11-28T05:55:00"
+            },
+            "duration": "24h 40m",
+            "stops": 1,
+            "layover": {
+                "airport": {
+                    "code": "KUL",
+                    "name": "Kuala Lumpur"
+                },
+                "duration": "2h 45m"
+            },
+            "price": {
+                "amount": 0,
+                "currency": "GBP",
+                "perPerson": true,
+                "note": "Included in outbound price (round trip fare)"
+            },
+            "baggage": "2 pieces",
+            "cabin": "Economy (Q)",
+            "aircraft": "Airbus A350-900",
+            "fareRules": {
+                "refundable": false,
+                "changeable": true,
+                "changeFee": 100
+            }
+        },
+        {
+            "id": "ret-002",
+            "airline": {
+                "code": "SQ",
+                "name": "Singapore Airlines",
+                "logo": "https://lh3.googleusercontent.com/aida-public/AB6AXuDbc4nf53q6V_eHFE0z61VTnKPReHrPI2culuO7djhZGr095VkT-JQki7-5vdlZpMn9WOtLkUHWnJgiZYi03Oc_dnk4baQSdgh8MaO873X_m_yWyUzaL3dISMIIr8vjtEPGC0YPTWN-aUKbxBV3FKCSBNIyqdpGJ2-HkXWjFN7EcljocPE2m15pz_L040rOVKsnqVtg1bfNl280oEjChsBq3eBGQvbfa9MZ6h5T-YURTUF8GyScH9QNIan9o1Yn7WkiHgPfEmr1eEQ"
+            },
+            "flightNumber": "SQ232",
+            "departure": {
+                "airport": {
+                    "code": "SYD",
+                    "name": "Kingsford Smith"
+                },
+                "time": "2024-11-27T11:00:00"
+            },
+            "arrival": {
+                "airport": {
+                    "code": "LHR",
+                    "name": "London Heathrow"
+                },
+                "time": "2024-11-28T05:30:00"
+            },
+            "duration": "27h 30m",
+            "stops": 1,
+            "layover": {
+                "airport": {
+                    "code": "SIN",
+                    "name": "Singapore Changi"
+                },
+                "duration": "5h 15m"
+            },
+            "price": {
+                "amount": 200,
+                "currency": "GBP",
+                "perPerson": true,
+                "note": "Additional supplement"
+            },
+            "baggage": "30 kg",
+            "cabin": "Economy (Standard)",
+            "aircraft": "Boeing 777-300ER",
+            "fareRules": {
+                "refundable": true,
+                "changeable": true,
+                "changeFee": 50
+            }
+        }
+    ]
+}

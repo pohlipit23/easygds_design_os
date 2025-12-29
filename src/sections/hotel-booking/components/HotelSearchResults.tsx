@@ -70,6 +70,13 @@ interface HotelSearchResultsProps {
 }
 
 const RECOMMENDATION_BADGES = ['Iconic', 'Bestseller', 'Luxury', 'Family Choice', 'Trending']
+const BADGE_COLORS: Record<string, 'blue' | 'gold' | 'green' | 'purple' | 'teal'> = {
+  'Iconic': 'gold',
+  'Bestseller': 'blue',
+  'Luxury': 'purple',
+  'Family Choice': 'green',
+  'Trending': 'teal'
+}
 
 export function HotelSearchResults({
   hotels,
@@ -208,7 +215,7 @@ export function HotelSearchResults({
           {/* Recommendations Section */}
           <section className="mb-6 relative border-b border-slate-200 dark:border-slate-700 pb-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xs font-bold uppercase text-slate-700 dark:text-slate-200 flex items-center gap-3">
+              <h2 className="text-sm font-bold uppercase text-slate-700 dark:text-slate-200 flex items-center gap-3 tracking-wide">
                 <span className="w-8 h-1 bg-[#203C94] dark:bg-[#0891B2] rounded-full"></span>
                 easygds Picks
               </h2>
@@ -246,9 +253,11 @@ export function HotelSearchResults({
                       roomType: bestRate.room.roomType,
                       boardType: bestRate.rate.boardType,
                       pricePerNight: bestRate.rate.pricePerNight,
+                      oldPrice: bestRate.rate.oldPrice,
                       currency: bestRate.rate.currency,
                     }}
                     badge={badge}
+                    badgeColor={BADGE_COLORS[badge] || 'blue'}
                     onSelect={() => onHotelSelect?.(hotel.id)}
                   />
                 )
@@ -259,7 +268,7 @@ export function HotelSearchResults({
           {/* Main Results */}
           <div>
             <div className="flex items-end justify-between mb-4">
-              <h2 className="text-xs font-bold uppercase text-slate-700 dark:text-slate-200">
+              <h2 className="text-sm font-bold uppercase text-slate-700 dark:text-slate-200 tracking-wide">
                 All Properties
               </h2>
               <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
@@ -295,11 +304,13 @@ export function HotelSearchResults({
                         roomType: bestRate.room.roomType,
                         boardType: bestRate.rate.boardType,
                         pricePerNight: bestRate.rate.pricePerNight,
+                        oldPrice: bestRate.rate.oldPrice,
                         totalPrice: bestRate.rate.totalPrice,
                         currency: bestRate.rate.currency,
                         refundable: bestRate.rate.refundable,
                       }}
                       badge={badge}
+                      badgeColor={badge ? BADGE_COLORS[badge] : undefined}
                       onSelect={() => onHotelSelect?.(hotel.id)}
                     />
                   )

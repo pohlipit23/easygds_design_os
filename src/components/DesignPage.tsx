@@ -163,6 +163,169 @@ export function DesignPage() {
                   </div>
                 )}
 
+                {/* Interactive Elements */}
+                <div>
+                  <h4 className="text-sm font-medium text-stone-500 dark:text-stone-400 uppercase tracking-wide mb-6">
+                    Interactive Elements
+                  </h4>
+
+                  {/* Buttons */}
+                  <div className="mb-8">
+                    <h5 className="text-xs font-semibold text-stone-900 dark:text-stone-100 mb-4 border-b border-stone-200 dark:border-stone-700 pb-2">
+                      Buttons
+                    </h5>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+                      <div className="space-y-2">
+                        <p className="text-xs text-stone-500 dark:text-stone-400">Primary</p>
+                        <button className="w-full h-11 bg-[#203C94] text-white rounded-lg text-xs font-bold uppercase hover:bg-[#1a3076] shadow-md transition-all hover:shadow-lg active:scale-95">
+                          View Deal
+                        </button>
+                      </div>
+
+                      <div className="space-y-2">
+                        <p className="text-xs text-stone-500 dark:text-stone-400">Secondary (Outline)</p>
+                        <button className="w-full h-11 bg-transparent border border-[#203C94] text-[#203C94] dark:border-[#0891B2] dark:text-[#0891B2] rounded-lg text-xs font-bold uppercase hover:bg-[#203C94]/5 dark:hover:bg-[#0891B2]/10 transition-colors active:scale-95">
+                          More Details
+                        </button>
+                      </div>
+
+                      <div className="space-y-2">
+                        <p className="text-xs text-stone-500 dark:text-stone-400">Toolbar / Utility</p>
+                        <button className="w-full flex items-center justify-center gap-2 h-10 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-xs font-bold uppercase hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm active:scale-95">
+                          <span className="material-icons-round text-lg">tune</span>
+                          <span>Filters</span>
+                        </button>
+                      </div>
+
+                      <div className="space-y-2">
+                        <p className="text-xs text-stone-500 dark:text-stone-400">Ghost / Text</p>
+                        <button className="w-full h-10 bg-transparent text-[#203C94] dark:text-[#0891B2] rounded-lg text-xs font-bold uppercase hover:bg-[#203C94]/5 dark:hover:bg-[#0891B2]/10 transition-colors">
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Navigation Components */}
+                  <div className="mb-8">
+                    <h5 className="text-xs font-semibold text-stone-900 dark:text-stone-100 mb-4 border-b border-stone-200 dark:border-stone-700 pb-2">
+                      Navigation Structure
+                    </h5>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      {/* Tabs */}
+                      <div className="space-y-3">
+                        <p className="text-xs text-stone-500 dark:text-stone-400">Tabs</p>
+                        <div className="flex border-b border-slate-200 dark:border-slate-700">
+                          <button className="px-4 py-2 text-sm font-semibold text-[#203C94] dark:text-[#0891B2] border-b-2 border-[#203C94] dark:border-[#0891B2]">
+                            Flights
+                          </button>
+                          <button className="px-4 py-2 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 transition-colors">
+                            Hotels
+                          </button>
+                          <button className="px-4 py-2 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 transition-colors">
+                            Cars
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Breadcrumbs */}
+                      <div className="space-y-3">
+                        <p className="text-xs text-stone-500 dark:text-stone-400">Breadcrumbs</p>
+                        <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                          <span className="hover:text-[#203C94] dark:hover:text-[#0891B2] cursor-pointer transition-colors">Home</span>
+                          <span className="material-icons-round text-[10px]">chevron_right</span>
+                          <span className="hover:text-[#203C94] dark:hover:text-[#0891B2] cursor-pointer transition-colors">Hotels</span>
+                          <span className="material-icons-round text-[10px]">chevron_right</span>
+                          <span className="font-semibold text-slate-900 dark:text-slate-200">Dubai</span>
+                        </div>
+                      </div>
+
+                      {/* Pagination */}
+                      <div className="space-y-3">
+                        <p className="text-xs text-stone-500 dark:text-stone-400">Pagination</p>
+                        <div className="flex items-center gap-1">
+                          <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50">
+                            <span className="material-icons-round text-sm">chevron_left</span>
+                          </button>
+                          <button className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#203C94] dark:bg-[#0891B2] text-white text-sm font-medium shadow-sm">1</button>
+                          <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800">2</button>
+                          <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800">3</button>
+                          <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <span className="material-icons-round text-sm">chevron_right</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Steps / Process */}
+                      <div className="space-y-3">
+                        <p className="text-xs text-stone-500 dark:text-stone-400">Process Step</p>
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#203C94] text-white text-xs font-bold">1</div>
+                          <div className="h-0.5 w-12 bg-[#203C94]"></div>
+                          <div className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-slate-300 dark:border-slate-600 text-slate-500 text-xs font-bold">2</div>
+                          <div className="h-0.5 w-12 bg-slate-200 dark:bg-slate-700"></div>
+                          <div className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-slate-300 dark:border-slate-600 text-slate-500 text-xs font-bold">3</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Form Controls */}
+                  <div>
+                    <h5 className="text-xs font-semibold text-stone-900 dark:text-stone-100 mb-4 border-b border-stone-200 dark:border-stone-700 pb-2">
+                      Form Controls
+                    </h5>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      <div className="space-y-2">
+                        <p className="text-xs text-stone-500 dark:text-stone-400">Search Input</p>
+                        <div className="relative">
+                          <span
+                            className="absolute left-3 top-1/2 -translate-y-1/2 material-icons-round text-slate-400 dark:text-slate-500 text-lg"
+                            aria-hidden="true"
+                          >
+                            search
+                          </span>
+                          <input
+                            type="text"
+                            placeholder="Destination..."
+                            readOnly
+                            className="w-full pl-10 pr-3 h-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-[#203C94]/20 dark:focus:ring-[#0891B2]/20 focus:border-[#203C94] dark:focus:border-[#0891B2] shadow-sm"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <p className="text-xs text-stone-500 dark:text-stone-400">Dropdown / Select</p>
+                        <div className="relative">
+                          <button className="w-full h-10 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 flex items-center justify-between text-sm text-slate-700 dark:text-slate-200 shadow-sm">
+                            <span>2 Guests</span>
+                            <span className="material-icons-round text-slate-400">expand_more</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <p className="text-xs text-stone-500 dark:text-stone-400">Checkbox & Switch</p>
+                        <div className="flex items-center gap-4 h-10">
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 rounded border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 flex items-center justify-center">
+                              <span className="material-icons-round text-[#203C94] dark:text-[#0891B2] text-sm font-bold">check</span>
+                            </div>
+                            <span className="text-sm text-slate-700 dark:text-slate-300">Option</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-9 h-5 rounded-full bg-[#203C94] dark:bg-[#0891B2] relative cursor-pointer">
+                              <div className="absolute right-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow-sm"></div>
+                            </div>
+                            <span className="text-sm text-slate-700 dark:text-slate-300">On</span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
                 {/* Edit hint */}
                 <div className="bg-stone-100 dark:bg-stone-800 rounded-md px-4 py-2.5">
                   <p className="text-xs text-stone-500 dark:text-stone-400">

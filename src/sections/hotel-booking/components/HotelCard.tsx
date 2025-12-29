@@ -21,16 +21,34 @@ interface HotelCardProps {
     roomType: string
     boardType: string
     pricePerNight: number
+    oldPrice?: number
     totalPrice: number
     currency: string
     refundable: boolean
   }
   badge?: string
+  badgeColor?: 'blue' | 'gold' | 'green' | 'purple' | 'teal'
   onSelect?: () => void
 }
 
-export function HotelCard({ hotel, bestRate, badge, onSelect }: HotelCardProps) {
+export function HotelCard({ hotel, bestRate, badge, badgeColor = 'blue', onSelect }: HotelCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  const getBadgeColorClass = () => {
+    switch (badgeColor) {
+      case 'gold':
+        return 'bg-[#FFB800] text-slate-900'
+      case 'green':
+        return 'bg-emerald-600 dark:bg-emerald-500 text-white'
+      case 'purple':
+        return 'bg-purple-600 dark:bg-purple-500 text-white'
+      case 'teal':
+        return 'bg-[#0891B2] dark:bg-[#0891B2] text-white'
+      case 'blue':
+      default:
+        return 'bg-[#203C94] dark:bg-[#0891B2] text-white'
+    }
+  }
 
   const nextImage = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -90,7 +108,7 @@ export function HotelCard({ hotel, bestRate, badge, onSelect }: HotelCardProps) 
 
           {/* Badge */}
           {badge && (
-            <div className="absolute top-2 left-2 bg-[#203C94] dark:bg-[#0891B2] text-white px-3 py-1 rounded-lg text-[0.625rem] font-bold uppercase shadow-md z-0 pointer-events-none leading-tight tracking-wider">
+            <div className={`absolute top-2 left-2 px-3 py-1 rounded-lg text-[0.625rem] font-bold uppercase shadow-md z-0 pointer-events-none leading-tight tracking-wider ${getBadgeColorClass()}`}>
               {badge}
             </div>
           )}
@@ -140,6 +158,11 @@ export function HotelCard({ hotel, bestRate, badge, onSelect }: HotelCardProps) 
           {/* Price Section */}
           <div className="flex md:flex-col items-center justify-between md:justify-center md:items-end border-t md:border-t-0 md:border-l border-slate-200 dark:border-slate-700 pt-4 pb-4 md:pt-0 md:pb-0 md:pl-4 md:w-52 shrink-0 mt-3 md:mt-0">
             <div className="text-left md:text-right">
+              {bestRate.oldPrice && (
+                <div className="text-xs text-slate-500 dark:text-slate-400 line-through mb-1">
+                  {formatPrice(bestRate.oldPrice)}
+                </div>
+              )}
               <div className="text-2xl font-bold text-[#203C94] dark:text-[#0891B2] leading-none mb-1">
                 {formatPrice(bestRate.pricePerNight)}
               </div>

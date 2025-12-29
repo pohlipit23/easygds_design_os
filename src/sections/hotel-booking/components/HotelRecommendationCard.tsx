@@ -18,9 +18,11 @@ interface HotelRecommendationCardProps {
     roomType: string
     boardType: string
     pricePerNight: number
+    oldPrice?: number
     currency: string
   }
   badge?: string
+  badgeColor?: 'blue' | 'gold' | 'green' | 'purple' | 'teal'
   onSelect?: () => void
 }
 
@@ -28,9 +30,26 @@ export function HotelRecommendationCard({
   hotel,
   bestRate,
   badge,
+  badgeColor = 'blue',
   onSelect,
 }: HotelRecommendationCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  const getBadgeColorClass = () => {
+    switch (badgeColor) {
+      case 'gold':
+        return 'bg-[#FFB800] text-slate-900'
+      case 'green':
+        return 'bg-emerald-600 dark:bg-emerald-500 text-white'
+      case 'purple':
+        return 'bg-purple-600 dark:bg-purple-500 text-white'
+      case 'teal':
+        return 'bg-[#0891B2] dark:bg-[#0891B2] text-white'
+      case 'blue':
+      default:
+        return 'bg-[#203C94] dark:bg-[#0891B2] text-white'
+    }
+  }
 
   const nextImage = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -92,7 +111,7 @@ export function HotelRecommendationCard({
 
         {/* Badge */}
         {badge && (
-          <div className="absolute top-2 left-2 bg-[#203C94] dark:bg-[#0891B2] text-white px-3 py-1 rounded-lg text-[0.625rem] font-bold uppercase shadow-md z-0 pointer-events-none leading-tight tracking-wider">
+          <div className={`absolute top-2 left-2 px-3 py-1 rounded-lg text-[0.625rem] font-bold uppercase shadow-md z-0 pointer-events-none leading-tight tracking-wider ${getBadgeColorClass()}`}>
             {badge}
           </div>
         )}
@@ -140,6 +159,11 @@ export function HotelRecommendationCard({
         {/* Price & CTA */}
         <div className="pt-3 pb-4 border-t border-slate-200 dark:border-slate-700 flex items-end justify-between mt-auto">
           <div>
+            {bestRate.oldPrice && (
+              <div className="text-xs text-slate-500 dark:text-slate-400 line-through mb-1">
+                {formatPrice(bestRate.oldPrice)}
+              </div>
+            )}
             <div className="text-xl font-bold text-[#203C94] dark:text-[#0891B2] leading-none">
               {formatPrice(bestRate.pricePerNight)}
             </div>
