@@ -31,9 +31,11 @@
       "description": "Experience unparalleled luxury at this iconic sail-shaped hotel offering stunning views of the Arabian Gulf, world-class dining, and exclusive beach access.",
       "amenities": ["Free WiFi", "Pool", "Spa", "Beach Access", "Restaurant", "Bar", "Gym", "Room Service", "Concierge", "Valet Parking"],
       "images": [
-        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800",
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800",
-        "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800"
+        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1000&h=450&fit=crop",
+        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1000&h=450&fit=crop",
+        "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1000&h=450&fit=crop",
+        "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1000&h=450&fit=crop",
+        "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1000&h=450&fit=crop"
       ],
       "policies": {
         "checkIn": "15:00",
@@ -228,7 +230,11 @@
       "capacity": 2,
       "size": "55 sqm",
       "amenities": ["Ocean View", "Balcony", "Marble Bathroom", "Rain Shower", "Separate Living Area", "Premium Toiletries"],
-      "images": ["https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600"]
+      "images": [
+        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=450&fit=crop",
+        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=450&fit=crop",
+        "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=450&fit=crop"
+      ]
     },
     {
       "id": "room-002",
@@ -238,7 +244,10 @@
       "capacity": 3,
       "size": "170 sqm",
       "amenities": ["Panoramic Ocean View", "Jacuzzi", "Dining Area", "Butler Service", "Premium Minibar"],
-      "images": ["https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600"]
+      "images": [
+        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=450&fit=crop",
+        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=450&fit=crop"
+      ]
     },
     {
       "id": "room-003",
@@ -248,7 +257,10 @@
       "capacity": 2,
       "size": "45 sqm",
       "amenities": ["City or Sea View", "Balcony", "Bathroom with Tub", "Minibar", "Coffee Machine"],
-      "images": ["https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600"]
+      "images": [
+        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=450&fit=crop",
+        "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=450&fit=crop"
+      ]
     },
     {
       "id": "room-004",

@@ -1,10 +1,10 @@
 import data from '@/../product/sections/flight-booking/data.json'
 import { FlightBooking } from './components/FlightBooking'
+import type { FlightOffer, SearchParams } from '@/../product/sections/flight-booking/types'
 
-// Cast data to ensure type safety with the JSON import
-const outboundOffers = data.outboundOffers as any[]
-const returnOffers = data.returnOffers as any[]
-const searchParams = data.searchParams as any
+const outboundOffers = data.outboundOffers as FlightOffer[]
+const returnOffers = data.returnOffers as FlightOffer[]
+const searchParams = data.searchParams as SearchParams
 
 export default function FlightBookingPreview() {
     return (

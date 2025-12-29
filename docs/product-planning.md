@@ -79,7 +79,7 @@ Select from Google Fonts:
 
 The AI will suggest options based on your product type and help you find a combination that fits.
 
-**Creates:** `product/design-system/colors.json`, `product/design-system/typography.json`
+**Creates:** `product/design-system/colors.json`, `product/design-system/typography.json`, `product/design-system/elements.json`
 
 ## 5. Application Shell
 

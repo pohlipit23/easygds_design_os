@@ -66,21 +66,10 @@ interface GuestReview {
 }
 
 interface HotelDetailsProps {
-  // Data
   hotel: Hotel
   rooms: Room[]
   rates: RoomRate[]
   reviews: GuestReview[]
-
-  // Search context
-  checkIn: string
-  checkOut: string
-  nights: number
-  guests: string
-
-  // Callbacks
-  onBack?: () => void
-  onRoomSelect?: (roomId: string, rateId: string) => void
   onAddToBasket?: (roomId: string, rateId: string) => void
 }
 
@@ -89,12 +78,6 @@ export function HotelDetails({
   rooms,
   rates,
   reviews,
-  checkIn,
-  checkOut,
-  nights,
-  guests,
-  onBack,
-  onRoomSelect,
   onAddToBasket,
 }: HotelDetailsProps) {
   const [selectedImage, setSelectedImage] = useState(0)
@@ -129,21 +112,16 @@ export function HotelDetails({
     }
   }
 
+  const getRatingText = (rating: number) => {
+    if (rating >= 9.5) return 'Exceptional'
+    if (rating >= 9.0) return 'Excellent'
+    if (rating >= 8.5) return 'Very Good'
+    if (rating >= 8.0) return 'Good'
+    return 'Pleasant'
+  }
+
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900">
-      {/* Back Button */}
-      <div className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
-        <div className="max-w-5xl mx-auto px-4 py-3">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 text-sm font-semibold text-[#203C94] dark:text-[#0891B2] hover:text-[#1A3994] dark:hover:text-[#06829A] transition-colors"
-          >
-            <span className="material-icons-round text-lg">arrow_back</span>
-            Back to search results
-          </button>
-        </div>
-      </div>
-
       {/* Photo Gallery */}
       <PhotoGallery
         images={hotel.images}
@@ -156,28 +134,29 @@ export function HotelDetails({
       <div className="max-w-5xl mx-auto px-4 py-6">
         {/* Hotel Header */}
         <div className="mb-6">
-          <div className="flex items-start justify-between gap-4 mb-2">
+          <div className="flex items-start gap-4 mb-2">
             <div className="flex-grow">
               <div className="flex items-center gap-3 mb-2">
                 <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
                   {hotel.name}
                 </h1>
-                <div className="flex items-center gap-0.5 text-[#FFB800]">
-                  {Array.from({ length: hotel.starRating }).map((_, i) => (
-                    <span key={i} className="material-icons-round text-base">star</span>
-                  ))}
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-0.5 text-[#FFB800]">
+                    {Array.from({ length: hotel.starRating }).map((_, i) => (
+                      <span key={i} className="material-icons-round text-base">star</span>
+                    ))}
+                  </div>
+                  <button
+                    onClick={() => scrollToSection('reviews')}
+                    className="text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                  >
+                    {hotel.guestRating.toFixed(1)} <span className="font-normal text-slate-500 dark:text-slate-400">{getRatingText(hotel.guestRating)}</span>
+                  </button>
                 </div>
               </div>
               <div className="flex items-center gap-1 text-sm text-slate-600 dark:text-slate-300">
                 <span className="material-icons-round text-[#0891B2] text-base">location_on</span>
                 <span>{hotel.location.address}</span>
-              </div>
-            </div>
-
-            <div className="flex-shrink-0 text-right">
-              <div className="inline-flex items-center gap-2 bg-[#203C94] dark:bg-[#1A3994] text-white px-3 py-1.5 rounded-lg">
-                <span className="text-xl font-bold">{hotel.guestRating.toFixed(1)}</span>
-                <span className="text-xs font-bold">Excellent</span>
               </div>
               <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                 Based on {hotel.reviewCount.toLocaleString()} verified reviews
@@ -231,8 +210,6 @@ export function HotelDetails({
                 key={room.id}
                 room={room}
                 rates={roomRates}
-                nights={nights}
-                onSelect={(rateId) => onRoomSelect?.(room.id, rateId)}
                 onAddToBasket={(rateId) => onAddToBasket?.(room.id, rateId)}
               />
             ))}

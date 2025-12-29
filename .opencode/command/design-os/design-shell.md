@@ -8,7 +8,7 @@ First, verify prerequisites exist:
 
 1. Read `/product/product-overview.md` — Product name and description
 2. Read `/product/product-roadmap.md` — Sections for navigation
-3. Check if `/product/design-system/colors.json` and `/product/design-system/typography.json` and `/product/design-system/elements.json` exist
+3. Check if `/product/design-system/colors.json`, `/product/design-system/typography.json` and `/product/design-system/elements.json` exist
 
 If overview or roadmap are missing:
 
@@ -200,6 +200,10 @@ If design tokens exist, apply them to the shell components:
 - Apply heading font to nav items and titles
 - Apply body font to other text
 - Include Google Fonts import in the preview
+
+**Elements:**
+- Read `/product/design-system/elements.json`
+- Apply element styles to the shell components
 
 ## Step 9: Confirm Completion
 

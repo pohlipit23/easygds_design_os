@@ -133,7 +133,7 @@ The product you're planning and designing. When creating screen designs and expo
 1. Product Overview → `product/product-overview.md`
 2. Product Roadmap → `product/product-roadmap.md`
 3. Data Model → `product/data-model/data-model.md`
-4. Design System → `product/design-system/colors.json`, `typography.json`
+4. Design System → `product/design-system/colors.json`, `typography.json`, elements.json
 5. Application Shell → `product/shell/spec.md`, `src/shell/components/`
 6. For each section: spec, data, screen designs, screenshots
 7. Export → `product-plan/` with complete handoff package

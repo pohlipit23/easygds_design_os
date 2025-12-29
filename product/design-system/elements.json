@@ -1,0 +1,345 @@
+{
+  "interactiveElements": {
+    "buttons": {
+      "primary": {
+        "label": "View Deal",
+        "styles": {
+          "height": "h-11",
+          "background": "bg-[#203C94]",
+          "backgroundHover": "hover:bg-[#1a3076]",
+          "text": "text-white",
+          "fontSize": "text-xs",
+          "fontWeight": "font-bold",
+          "textTransform": "uppercase",
+          "borderRadius": "rounded-lg",
+          "shadow": "shadow-md",
+          "shadowHover": "hover:shadow-lg",
+          "transition": "transition-all",
+          "active": "active:scale-95"
+        }
+      },
+      "secondary": {
+        "label": "More Details",
+        "styles": {
+          "height": "h-11",
+          "background": "bg-transparent",
+          "backgroundHover": "hover:bg-[#203C94]/5",
+          "backgroundHoverDark": "dark:hover:bg-[#0891B2]/10",
+          "border": "border border-[#203C94]",
+          "borderDark": "dark:border-[#0891B2]",
+          "text": "text-[#203C94]",
+          "textDark": "dark:text-[#0891B2]",
+          "fontSize": "text-xs",
+          "fontWeight": "font-bold",
+          "textTransform": "uppercase",
+          "borderRadius": "rounded-lg",
+          "transition": "transition-colors",
+          "active": "active:scale-95"
+        }
+      },
+      "toolbar": {
+        "label": "Filters",
+        "icon": "tune",
+        "styles": {
+          "height": "h-10",
+          "background": "bg-white",
+          "backgroundDark": "dark:bg-slate-800",
+          "backgroundHover": "hover:bg-slate-50",
+          "backgroundHoverDark": "dark:hover:bg-slate-700",
+          "border": "border border-slate-200",
+          "borderDark": "dark:border-slate-700",
+          "text": "text-slate-700",
+          "textDark": "dark:text-slate-200",
+          "fontSize": "text-xs",
+          "fontWeight": "font-bold",
+          "textTransform": "uppercase",
+          "borderRadius": "rounded-lg",
+          "shadow": "shadow-sm",
+          "transition": "transition-colors",
+          "active": "active:scale-95",
+          "layout": "flex items-center justify-center gap-2"
+        }
+      },
+      "ghost": {
+        "label": "Cancel",
+        "styles": {
+          "height": "h-10",
+          "background": "bg-transparent",
+          "backgroundHover": "hover:bg-[#203C94]/5",
+          "backgroundHoverDark": "dark:hover:bg-[#0891B2]/10",
+          "text": "text-[#203C94]",
+          "textDark": "dark:text-[#0891B2]",
+          "fontSize": "text-xs",
+          "fontWeight": "font-bold",
+          "textTransform": "uppercase",
+          "borderRadius": "rounded-lg",
+          "transition": "transition-colors"
+        }
+      }
+    },
+    "navigation": {
+      "tabs": {
+        "container": {
+          "layout": "flex",
+          "border": "border-b border-slate-200",
+          "borderDark": "dark:border-slate-700"
+        },
+        "activeTab": {
+          "padding": "px-4 py-2",
+          "fontSize": "text-sm",
+          "fontWeight": "font-semibold",
+          "text": "text-[#203C94]",
+          "textDark": "dark:text-[#0891B2]",
+          "border": "border-b-2 border-[#203C94]",
+          "borderDark": "dark:border-[#0891B2]"
+        },
+        "inactiveTab": {
+          "padding": "px-4 py-2",
+          "fontSize": "text-sm",
+          "fontWeight": "font-medium",
+          "text": "text-slate-500",
+          "textDark": "dark:text-slate-400",
+          "textHover": "hover:text-slate-700",
+          "textHoverDark": "dark:hover:text-slate-300",
+          "transition": "transition-colors"
+        },
+        "sampleItems": ["Flights", "Hotels", "Cars"]
+      },
+      "breadcrumbs": {
+        "container": {
+          "layout": "flex items-center gap-2",
+          "fontSize": "text-xs",
+          "text": "text-slate-500",
+          "textDark": "dark:text-slate-400"
+        },
+        "link": {
+          "textHover": "hover:text-[#203C94]",
+          "textHoverDark": "dark:hover:text-[#0891B2]",
+          "cursor": "cursor-pointer",
+          "transition": "transition-colors"
+        },
+        "separator": {
+          "icon": "chevron_right",
+          "fontSize": "text-[10px]"
+        },
+        "current": {
+          "fontWeight": "font-semibold",
+          "text": "text-slate-900",
+          "textDark": "dark:text-slate-200"
+        },
+        "sampleItems": ["Home", "Hotels", "Dubai"]
+      },
+      "pagination": {
+        "container": {
+          "layout": "flex items-center gap-1"
+        },
+        "navButton": {
+          "size": "w-8 h-8",
+          "layout": "flex items-center justify-center",
+          "borderRadius": "rounded-lg",
+          "border": "border border-slate-200",
+          "borderDark": "dark:border-slate-700",
+          "text": "text-slate-500",
+          "backgroundHover": "hover:bg-slate-50",
+          "backgroundHoverDark": "dark:hover:bg-slate-800",
+          "disabled": "disabled:opacity-50",
+          "icon": {
+            "prev": "chevron_left",
+            "next": "chevron_right",
+            "fontSize": "text-sm"
+          }
+        },
+        "activePage": {
+          "size": "w-8 h-8",
+          "layout": "flex items-center justify-center",
+          "borderRadius": "rounded-lg",
+          "background": "bg-[#203C94]",
+          "backgroundDark": "dark:bg-[#0891B2]",
+          "text": "text-white",
+          "fontSize": "text-sm",
+          "fontWeight": "font-medium",
+          "shadow": "shadow-sm"
+        },
+        "inactivePage": {
+          "size": "w-8 h-8",
+          "layout": "flex items-center justify-center",
+          "borderRadius": "rounded-lg",
+          "border": "border border-slate-200",
+          "borderDark": "dark:border-slate-700",
+          "text": "text-slate-600",
+          "textDark": "dark:text-slate-300",
+          "fontSize": "text-sm",
+          "fontWeight": "font-medium",
+          "backgroundHover": "hover:bg-slate-50",
+          "backgroundHoverDark": "dark:hover:bg-slate-800"
+        }
+      },
+      "processSteps": {
+        "container": {
+          "layout": "flex items-center gap-3"
+        },
+        "activeStep": {
+          "size": "w-8 h-8",
+          "layout": "flex items-center justify-center",
+          "borderRadius": "rounded-full",
+          "background": "bg-[#203C94]",
+          "text": "text-white",
+          "fontSize": "text-xs",
+          "fontWeight": "font-bold"
+        },
+        "inactiveStep": {
+          "size": "w-8 h-8",
+          "layout": "flex items-center justify-center",
+          "borderRadius": "rounded-full",
+          "border": "border-2 border-slate-300",
+          "borderDark": "dark:border-slate-600",
+          "text": "text-slate-500",
+          "fontSize": "text-xs",
+          "fontWeight": "font-bold"
+        },
+        "connector": {
+          "active": {
+            "height": "h-0.5",
+            "width": "w-12",
+            "background": "bg-[#203C94]"
+          },
+          "inactive": {
+            "height": "h-0.5",
+            "width": "w-12",
+            "background": "bg-slate-200",
+            "backgroundDark": "dark:bg-slate-700"
+          }
+        }
+      }
+    },
+    "formControls": {
+      "searchInput": {
+        "container": {
+          "position": "relative"
+        },
+        "icon": {
+          "name": "search",
+          "position": "absolute left-3 top-1/2 -translate-y-1/2",
+          "text": "text-slate-400",
+          "textDark": "dark:text-slate-500",
+          "fontSize": "text-lg"
+        },
+        "input": {
+          "width": "w-full",
+          "padding": "pl-10 pr-3",
+          "height": "h-10",
+          "background": "bg-slate-50",
+          "backgroundDark": "dark:bg-slate-900",
+          "border": "border border-slate-200",
+          "borderDark": "dark:border-slate-700",
+          "borderRadius": "rounded-lg",
+          "fontSize": "text-sm",
+          "fontWeight": "font-medium",
+          "text": "text-slate-900",
+          "textDark": "dark:text-white",
+          "placeholder": "placeholder:text-slate-400",
+          "focus": "focus:ring-2 focus:ring-[#203C94]/20 focus:border-[#203C94]",
+          "focusDark": "dark:focus:ring-[#0891B2]/20 dark:focus:border-[#0891B2]",
+          "shadow": "shadow-sm"
+        },
+        "samplePlaceholder": "Destination..."
+      },
+      "dropdown": {
+        "container": {
+          "position": "relative"
+        },
+        "trigger": {
+          "width": "w-full",
+          "height": "h-10",
+          "background": "bg-white",
+          "backgroundDark": "dark:bg-slate-800",
+          "border": "border border-slate-200",
+          "borderDark": "dark:border-slate-700",
+          "borderRadius": "rounded-lg",
+          "padding": "px-3",
+          "layout": "flex items-center justify-between",
+          "fontSize": "text-sm",
+          "text": "text-slate-700",
+          "textDark": "dark:text-slate-200",
+          "shadow": "shadow-sm",
+          "icon": {
+            "name": "expand_more",
+            "text": "text-slate-400"
+          }
+        },
+        "sampleValue": "2 Guests"
+      },
+      "checkbox": {
+        "container": {
+          "layout": "flex items-center gap-2"
+        },
+        "box": {
+          "size": "w-5 h-5",
+          "borderRadius": "rounded",
+          "border": "border border-slate-300",
+          "borderDark": "dark:border-slate-600",
+          "background": "bg-white",
+          "backgroundDark": "dark:bg-slate-800",
+          "layout": "flex items-center justify-center"
+        },
+        "checkmark": {
+          "icon": "check",
+          "text": "text-[#203C94]",
+          "textDark": "dark:text-[#0891B2]",
+          "fontSize": "text-sm",
+          "fontWeight": "font-bold"
+        },
+        "label": {
+          "fontSize": "text-sm",
+          "text": "text-slate-700",
+          "textDark": "dark:text-slate-300"
+        },
+        "sampleLabel": "Option"
+      },
+      "switch": {
+        "container": {
+          "layout": "flex items-center gap-2"
+        },
+        "track": {
+          "size": "w-9 h-5",
+          "borderRadius": "rounded-full",
+          "backgroundOn": "bg-[#203C94]",
+          "backgroundOnDark": "dark:bg-[#0891B2]",
+          "position": "relative",
+          "cursor": "cursor-pointer"
+        },
+        "thumb": {
+          "size": "w-4 h-4",
+          "borderRadius": "rounded-full",
+          "background": "bg-white",
+          "shadow": "shadow-sm",
+          "positionOn": "absolute right-0.5 top-0.5",
+          "positionOff": "absolute left-0.5 top-0.5"
+        },
+        "label": {
+          "fontSize": "text-sm",
+          "text": "text-slate-700",
+          "textDark": "dark:text-slate-300"
+        },
+        "sampleLabels": {
+          "on": "On",
+          "off": "Off"
+        }
+      }
+    }
+  },
+  "colors": {
+    "primary": "#203C94",
+    "primaryHover": "#1a3076",
+    "primaryDark": "#0891B2",
+    "primaryAlpha": {
+      "5": "rgba(32, 60, 148, 0.05)",
+      "10": "rgba(32, 60, 148, 0.1)",
+      "20": "rgba(32, 60, 148, 0.2)"
+    },
+    "primaryDarkAlpha": {
+      "10": "rgba(8, 145, 178, 0.1)",
+      "20": "rgba(8, 145, 178, 0.2)"
+    }
+  }
+}

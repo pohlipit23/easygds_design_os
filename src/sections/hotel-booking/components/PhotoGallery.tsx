@@ -15,7 +15,7 @@ export function PhotoGallery({
     <div className="bg-white dark:bg-slate-800">
       <div className="max-w-5xl mx-auto px-4 py-4">
         {/* Main Image */}
-        <div className="relative rounded-lg overflow-hidden aspect-[16/9] bg-slate-100 dark:bg-slate-700 mb-3">
+        <div className="relative rounded-lg overflow-hidden aspect-[20/9] bg-slate-100 dark:bg-slate-700 mb-3">
           <img
             src={images[selectedIndex]}
             alt={`${hotelName} - Photo ${selectedIndex + 1}`}

@@ -86,6 +86,8 @@ interface AppShellProps {
     car?: CarData;
     tour?: TourData;
   };
+  showHeader?: boolean;
+  showFooter?: boolean;
 }
 
 export function AppShell({
@@ -93,7 +95,9 @@ export function AppShell({
   showContextBar = false,
   productType = 'flight',
   searchContext,
-  productContext
+  productContext,
+  showHeader = true,
+  showFooter = true,
 }: AppShellProps) {
   const [searchWidgetOpen, setSearchWidgetOpen] = useState(false);
   const [productDetailsOpen, setProductDetailsOpen] = useState(false);
@@ -197,15 +201,17 @@ export function AppShell({
   return (
     <div className="min-h-screen flex flex-col bg-white">
       {/* Header */}
-      <Header
-        onSearchToggle={() => setSearchWidgetOpen(!searchWidgetOpen)}
-        onRegionalSettingsToggle={() => setRegionalSettingsOpen(!regionalSettingsOpen)}
-        onFlightDetailsToggle={() => setProductDetailsOpen(!productDetailsOpen)}
-        searchContext={searchContext}
-        flightContext={headerFlightContext}
-        currentCurrency={regionalPreferences.currency}
-        currentFlag={regionalPreferences.countryCode}
-      />
+      {showHeader && (
+        <Header
+          onSearchToggle={() => setSearchWidgetOpen(!searchWidgetOpen)}
+          onRegionalSettingsToggle={() => setRegionalSettingsOpen(!regionalSettingsOpen)}
+          onFlightDetailsToggle={() => setProductDetailsOpen(!productDetailsOpen)}
+          searchContext={searchContext}
+          flightContext={headerFlightContext}
+          currentCurrency={regionalPreferences.currency}
+          currentFlag={regionalPreferences.countryCode}
+        />
+      )}
 
       {/* Regional Settings Modal */}
       <RegionalSettings
@@ -250,7 +256,7 @@ export function AppShell({
       </main>
 
       {/* Footer */}
-      <Footer />
+      {showFooter && <Footer />}
     </div>
   );
 }

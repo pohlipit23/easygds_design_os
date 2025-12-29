@@ -15,7 +15,7 @@ Verify the minimum requirements exist:
 - `/product/data-model/data-model.md` — Global data model
 - `/product/design-system/colors.json` — Color tokens
 - `/product/design-system/typography.json` — Typography tokens
-- `/product/design-system/elements.json` — Elements tokens
+- `/product/design-system/elements.json` — Elements tokens  
 - `src/shell/components/AppShell.tsx` — Application shell
 
 If required files are missing:
@@ -77,7 +77,7 @@ product-plan/
 │   ├── tokens.css
 │   ├── tailwind-colors.md
 │   └── fonts.md
-   │
+│
 ├── data-model/                  # Data model
 │   ├── README.md
 │   ├── types.ts
