@@ -34,12 +34,21 @@ interface RoomCardProps {
 export function RoomCard({ room, rates, nights, onSelect, onAddToBasket }: RoomCardProps) {
   const [selectedRateId, setSelectedRateId] = useState<string>(rates[0]?.id || '')
   const [showAllRates, setShowAllRates] = useState(false)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   const selectedRate = rates.find((rate) => rate.id === selectedRateId) || rates[0]
 
   if (!selectedRate) return null
 
   const visibleRates = showAllRates ? rates : rates.slice(0, 2)
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % room.images.length)
+  }
+
+  const previousImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + room.images.length) % room.images.length)
+  }
 
   const getBoardTypeIcon = (boardType: string) => {
     switch (boardType) {
@@ -60,13 +69,38 @@ export function RoomCard({ room, rates, nights, onSelect, onAddToBasket }: RoomC
   return (
     <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-md transition-all">
       <div className="flex flex-col md:flex-row">
-        {/* Room Image */}
-        <div className="relative w-full md:w-48 aspect-[4/3] md:aspect-auto bg-slate-100 dark:bg-slate-700 flex-shrink-0">
+        {/* Room Image Carousel - Landscape */}
+        <div className="relative w-full md:w-72 aspect-[16/9] bg-slate-100 dark:bg-slate-700 flex-shrink-0">
           <img
-            src={room.images[0]}
-            alt={room.roomType}
+            src={room.images[currentImageIndex]}
+            alt={`${room.roomType} - Image ${currentImageIndex + 1}`}
             className="w-full h-full object-cover"
           />
+
+          {/* Image Navigation */}
+          {room.images.length > 1 && (
+            <>
+              <button
+                onClick={previousImage}
+                className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm hover:bg-white dark:hover:bg-slate-700 transition-all shadow-sm"
+                aria-label="Previous image"
+              >
+                <span className="material-icons-round text-slate-900 dark:text-white text-base">chevron_left</span>
+              </button>
+              <button
+                onClick={nextImage}
+                className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm hover:bg-white dark:hover:bg-slate-700 transition-all shadow-sm"
+                aria-label="Next image"
+              >
+                <span className="material-icons-round text-slate-900 dark:text-white text-base">chevron_right</span>
+              </button>
+
+              {/* Image Counter */}
+              <div className="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm px-2 py-0.5 rounded text-white text-xs font-medium">
+                {currentImageIndex + 1} / {room.images.length}
+              </div>
+            </>
+          )}
         </div>
 
         {/* Room Details */}
@@ -98,9 +132,9 @@ export function RoomCard({ room, rates, nights, onSelect, onAddToBasket }: RoomC
             {room.amenities.slice(0, 2).map((amenity, index) => (
               <span
                 key={index}
-                className="inline-flex items-center gap-1 text-xs bg-[#0891B2]/10 text-[#0891B2] dark:bg-[#0891B2]/20 px-2 py-0.5 rounded"
+                className="inline-flex items-center gap-1 text-xs bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-400 px-2 py-0.5 rounded"
               >
-                <span className="material-icons-round text-xs">check</span>
+                <span className="material-icons-round text-xs">check_circle</span>
                 {amenity}
               </span>
             ))}
@@ -156,11 +190,11 @@ export function RoomCard({ room, rates, nights, onSelect, onAddToBasket }: RoomC
                     <div className="text-right">
                       {rate.oldPrice && (
                         <div className="text-xs text-slate-500 dark:text-slate-400 line-through">
-                          +£{rate.oldPrice.toFixed(0)}
+                          £{rate.oldPrice.toFixed(0)}
                         </div>
                       )}
-                      <div className="text-lg font-bold text-[#FFB800]">
-                        +£{rate.pricePerNight.toFixed(0)}
+                      <div className="text-lg font-bold text-[#203C94] dark:text-[#0891B2]">
+                        £{rate.pricePerNight.toFixed(0)}
                       </div>
                     </div>
                     <button
@@ -168,7 +202,7 @@ export function RoomCard({ room, rates, nights, onSelect, onAddToBasket }: RoomC
                         setSelectedRateId(rate.id)
                         onAddToBasket?.(rate.id)
                       }}
-                      className="px-4 h-9 bg-[#FFB800] hover:bg-[#E5A600] text-slate-900 font-bold text-xs rounded transition-all flex-shrink-0"
+                      className="px-4 h-9 bg-[#203C94] hover:bg-[#1A3994] dark:bg-[#0891B2] dark:hover:bg-[#06829A] text-white font-bold text-xs rounded transition-all flex-shrink-0"
                     >
                       Select
                     </button>

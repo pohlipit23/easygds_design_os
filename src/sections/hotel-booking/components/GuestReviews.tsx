@@ -46,7 +46,7 @@ export function GuestReviews({
       {/* Overall Rating - Compact */}
       <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
         <div className="flex-shrink-0">
-          <div className="bg-[#FFB800] text-slate-900 rounded-lg p-3 text-center min-w-[80px]">
+          <div className="bg-[#203C94] dark:bg-[#1A3994] text-white rounded-lg p-3 text-center min-w-[80px]">
             <div className="text-3xl font-bold">{overallRating.toFixed(1)}</div>
             <div className="text-xs font-bold">{getRatingLabel(overallRating)}</div>
           </div>

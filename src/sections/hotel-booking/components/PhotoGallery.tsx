@@ -13,9 +13,9 @@ export function PhotoGallery({
 }: PhotoGalleryProps) {
   return (
     <div className="bg-white dark:bg-slate-800">
-      <div className="max-w-4xl mx-auto px-4 py-4">
+      <div className="max-w-5xl mx-auto px-4 py-4">
         {/* Main Image */}
-        <div className="relative rounded-lg overflow-hidden aspect-[16/9] bg-slate-100 dark:bg-slate-700">
+        <div className="relative rounded-lg overflow-hidden aspect-[16/9] bg-slate-100 dark:bg-slate-700 mb-3">
           <img
             src={images[selectedIndex]}
             alt={`${hotelName} - Photo ${selectedIndex + 1}`}
@@ -42,6 +42,29 @@ export function PhotoGallery({
             </>
           )}
         </div>
+
+        {/* Thumbnail Strip */}
+        {images.length > 1 && (
+          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+            {images.map((image, index) => (
+              <button
+                key={index}
+                onClick={() => onImageSelect(index)}
+                className={`flex-shrink-0 w-20 h-14 rounded overflow-hidden border-2 transition-all ${
+                  index === selectedIndex
+                    ? 'border-[#203C94] dark:border-[#0891B2] opacity-100'
+                    : 'border-transparent opacity-60 hover:opacity-100'
+                }`}
+              >
+                <img
+                  src={image}
+                  alt={`${hotelName} thumbnail ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
